@@ -222,25 +222,32 @@ def validate_user_email(values):
     """
     Inside the try, checks all user email input syntax.
     Raises ValueError if strings cannot be converted
-    and prompts to replace data in index [2] of the 
+    and prompts to replace data in index [2] of the
     user_data list = user_email
     """
-    values_string = f'{values.split(",")}'
-    # print(f'The user_data you provided converted into a list of strings is:\n{values_string}\n')
+    # values_string = f'{values.split(",")}'
+    # print('The user_data you provided converted into a list of strings is:')
+    # print(f'\n{values_string}\n')
     try:
-        if (re.fullmatch(REGEX_EMAIL, values)):
-            # print('Email is valid...')
+        if re.fullmatch(REGEX, values):
+            print('Email is valid...')
             user_data[2] = values.lower()
+# removed this for the change email option 3. in update_exsisting order f
             # yes_no_user()
+            clear_screen()
         else:
             raise ValueError(
-                f'The email you have provided "{values}" does not seem\nto be in a regular format'
+                f'The email you have provided "{values}" does not seem'
+                'to be in a regular format'
             )
     except ValueError as error:
-        print(f'\nInvalid data: {error}. Please check the entry and try again.\n')
-        user_email = remove(input('Your Email: ').lower())
-        user_data[2] = user_email
+        print(
+            f'\nInvalid data: {error}. Please check the entry and try again.\n'
+            )
+        user_email = remove_blank_space(input('Your Email: ').lower())
         validate_user_email(user_email)
+        # user_data[2].update(user_email)
+        user_data[2] = user_email
         # print(user_data)
 
 

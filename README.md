@@ -225,9 +225,9 @@ Date Updated and Date Ordered can exist independently of each other, but __all s
 #### Refactoring using loop() functions
 * A feature of the app is to return user to the landing page regularly. Although working as intended, this places the code at risk of incurring a [RecusionError](https://stackoverflow.com/questions/53786145/recursionerror-in-python) and/or a [StackOverflowError](https://stackoverflow.com/questions/214741/what-is-a-stackoverflowerror). Future branches will include code refactored with more `loop()` functions.
 #### Python File Structure
-* All the code in the app is in a single [run.py](run.py) file. To promte clarity when reading the code, future features will include code refactored and split into separate `.py` files and accessed through `import` functions. 
-* Conatining these more descriptive `.py` files into a parent folder is good practice and promtes the depth, breadth and readability of the code written.
-  * Accessing `.py` files in a subsequent file folder involves containing a `__init__.py` within the parent file folder, as researcched at [stackoverflow.com](ttps://stackoverflow.com/questions/44977227/how-to-configure-main-py-init-py-and-setup-py-for-a-basic-package-setu).
+* All the code in the app is in a single [run.py](run.py) file. To promote clarity when reading the code, future features will include code refactored and split into separate `.py` files and accessed through `import` functions. 
+* Containing these more descriptive `.py` files into a parent folder is good practice and promotes the depth, breadth and readability of the code written.
+  * Accessing `.py` files in a subsequent file folder involves containing a `__init__.py` within the parent file folder, as researched at [stackoverflow.com](ttps://stackoverflow.com/questions/44977227/how-to-configure-main-py-init-py-and-setup-py-for-a-basic-package-setu).
 #### Application Programming Interface (API)
 * Including an API to efficiently automate ordering functions into popular, commercially available clinical practice management software(s).
 #### Inclusion into a full stack project
@@ -336,7 +336,7 @@ The [testing tree](#critical-pathway-and-testing-tree) process has been performe
 * Initial manipulation of the row_data imported from the database would not occur as it was in a nested list format. Corrected by developing code similar to that researched at [Pythonpool - flattening nested lists](https://www.pythonpool.com/flatten-list-python/).
 * Index [out of range error](https://stackoverflow.com/questions/24812679/what-is-an-index-out-of-range-exception-and-how-do-i-fix-it) was a common bug dealt with by better use of loop functions and/or appropriate index referencing.
 * Handling dates and times into `isoformat()` was corrected using researched from [The Python Coding Book](https://thepythoncodingbook.com/dates-and-times-in-python/).
-* When a user searched for an order that was not not matched in the database, the local 'previously input' row data was being keep in the local list. This was throwing a TypeError when the user then tried to re-enter the correct information. Fixed by placing the returned integer from the `retrieve_order()` to replace the value in a local storage list `search_row[0]`. From here the funtion process and the returned integer can be separately defined and use elsewhere without effecting each other.  
+* When a user searched for an order that was not not matched in the database, the local 'previously input' row data was being keep in the local list. This was throwing a TypeError when the user then tried to re-enter the correct information. Fixed by placing the returned integer from the `retrieve_order()` to replace the value in a local storage list `search_row[0]`. From here the function process and the returned integer can be separately defined and use elsewhere without effecting each other.  
 * A small error was occurring with the use of list`.append()` vs `list[element at index no] = replace_with_element` and subsequently resolved.
 * General document formatting errors also fixed with the aid of the various problem identifiers installed into the development environment like [flake8](https://pypi.org/project/flake8/) and [ptlint](https://pypi.org/project/pylint/).
 

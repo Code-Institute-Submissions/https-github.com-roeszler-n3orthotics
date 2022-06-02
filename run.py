@@ -482,9 +482,6 @@ def retrieve_order():
             ]
         search_match_row = row_location[0]
         search_row[0] = search_match_row
-        # search_match_row = search_row[0]
-        # print(search_match_row)
-        # print(type(search_match_row))
         return search_match_row
 
 
@@ -494,12 +491,8 @@ def display_order():
     Converts specific string values back into integers and
     Displays entire order as a list
     """
-    # row = int(retrieve_order())
     retrieve_order()
     row = search_row[0]
-    # row = search_row[0]
-    # search_row = retrieve_order()
-    # row = int(search_row[0])
     order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
     flat_order = flatten_nested_list(order_row)
     size_eu = flat_order[3]
@@ -874,6 +867,3 @@ def main():
 
 
 main()
-
-
-# retrieve_order()

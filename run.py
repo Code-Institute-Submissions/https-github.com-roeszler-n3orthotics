@@ -50,7 +50,7 @@ def instruct_user_data():
 
     print('First Name: Bobby\nLast Name: Hunden')
     print('Email: bobby123@yourdomain.com\n')
-    get_user_data()
+    # get_user_data()
 
 
 def get_user_data():
@@ -70,13 +70,20 @@ def get_user_data():
     user_data[2] = user_email
     print(user_data)
 
+    validate_user_f_name(f'{f_name}')
+    validate_user_l_name(f'{l_name}')
+    validate_user_email(f'{user_email}')
+
+
+def summary_user_data():
+    f_name = user_data[0]
+    l_name = user_data[1]
+    user_email = user_data[2]
+
     print(f'\nThanks {f_name}. Your user details are as follows:')
     print('------------')
     print(f'Full Name: {f_name} {l_name}\nEmail: {user_email}')
-    print('------------\n')
-    validate_user_names(f'{f_name}')
-    validate_user_names(f'{l_name}')
-    validate_user_email(f'{user_email}')
+    print('------------')
     
 
 

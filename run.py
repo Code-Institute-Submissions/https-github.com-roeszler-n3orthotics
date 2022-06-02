@@ -26,19 +26,36 @@ order_data = ['size_eu', 'height', 'width']
 # print(data)
 
 
-# def start():
-#     """
-#     Start screen prompting user to:
-#     1. Create a new order, or
-#     2. Retrieve an exsisting order with order number
-#     """
-#     print('Welcome to N(3)ORTHOTICS order portal.\n')
-#     print('Use this app to directly access made-to-order N3D Printed Insoles')
-#     print('Please visit northotics.com/home for more information\n')
-#     print('Select 1. : Place a new N3D insole order')
-#     print('Select 2. : Retrieve an exsisting N3D order')
-#     print('Select 3. : Exit Program\n')
-#     # select_option()
+def start():
+    """
+    Start screen prompting user to:
+    1. Create a new order, or
+    2. Retrieve an exsisting order with order number
+    """
+    print('Welcome to N(3)ORTHOTICS order portal.\n')
+    print('Use this app to directly access made-to-order N3D Printed Insoles')
+    print('Please visit northotics.com/home for more information\n')
+    print('Select 1. : Place a new N3D insole order')
+    print('Select 2. : Retrieve an exsisting N3D order')
+    print('Select 3. : Exit Program\n')
+    select_option()
+
+
+def select_option():
+    correct = input('Your Selection: ')
+    for i in correct:
+        if i == '1':
+            # print('Updating worksheet and proceeding to order_data...\n')
+            # return True
+            main()
+        elif i == '2':
+            print('Taking you to retrieve_order function...\n')
+            # get_user_data()
+            # instruct_user_data()
+            # get_user_data()
+        else:
+            print(f'The number you have provided "{correct}" is not available.\nPlease select again\n')
+            select_option()
 
 
 def instruct_user_data():

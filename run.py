@@ -268,23 +268,21 @@ def get_latest_row_entry():
     print(latest)
 
 
-ef yes_no_user():
-    """
-    Prompt for user to confirm or input correct user_data
-    """
-    summary_user_data()
-    correct = input('\nIs this information correct? y/n: ').lower()
-    if correct.startswith('y'):
-        f_name = user_data[0]
-        print(f'\nThanks {f_name}. Now lets customise your N3 Othoses order...')
-        get_order_data()
-        generate_order_no()
-        combine_data_for_export()
-        summary_order_data()
-        submit_order()
-        # return True
-    else:
-        get_user_data()
+# def yes_no(answer):
+#     """
+#     Function for a Yes/No result based on the answer provided as an arguement
+#     """
+#     response = input('\nIs this information correct? y/n: ').lower()
+#     # response = raw_input(answer).lower()
+
+#     while True:
+#         # response = raw_input(answer).lower()
+#         if response.startswith('y'):
+#            return True
+#         elif response.startswith('n'):
+#            return False
+#         else:
+#            print ("Please respond with 'yes' or 'no'")
 
 
 def get_order_data():

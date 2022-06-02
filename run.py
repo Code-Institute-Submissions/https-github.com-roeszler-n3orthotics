@@ -101,7 +101,7 @@ def validate_user_names(values):
         get_user_data()
 
 
-def validate_user_email(values):
+def validate_user_email(user_email):
     """
     Inside the try, checks all user_email input syntax.
     Raises ValueError if strings cannot be converted

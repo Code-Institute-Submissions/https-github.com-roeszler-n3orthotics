@@ -435,6 +435,32 @@ def retrieve_order():
                 return search_res_row
 
 
+def display_order():
+    """
+    
+    """
+    row = int(retrieve_order())
+    order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
+    flat_order = flatten_nested_list(order_row)
+    
+    # converts back to an integer
+    size_eu = flat_order[3]
+    flat_order[3] = int(size_eu) 
+    order_no = flat_order[6]
+    flat_order[6] = int(order_no)
+    user_data[0:3] = flat_order[0:3]
+    order_data[0:6] = flat_order[3:9]
+    order_data[7] = int(row)
+    combine_data_for_export()
+  
+    print('\nYour order details are as follows:\n')
+    print(f'Full Name : {user_data[0]} {flat_order[1]}\nEmail : {flat_order[2]}')
+    print(f'Shoe Size : EU {flat_order[3]}\nArch Height : {flat_order[4]}\nInsole Width : {flat_order[5]}')
+    print(f'Order No. : {flat_order[6]}\nDate Ordered : {flat_order[7]}\nCurrent Status : {flat_order[8]}')
+    print(f'Place in production queue : {flat_order[10]}\n')
+    update_status()
+
+
 def update_status():
     """
     

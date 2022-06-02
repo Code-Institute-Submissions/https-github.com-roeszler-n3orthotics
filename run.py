@@ -341,16 +341,19 @@ def submit_order():
     """
     
     """
-    submit = input('\nWould you like to submit this order? y/n: ').lower()
+    submit = input('Would you like to submit this order? y/n: ').lower()
     if submit.startswith('n'):
         save_order()
     else:
+        clear_screen()
         generate_order_no()
         combine_data_for_export()
-        user_email = order_data[2]
-        recent_order_no = order_data[6]
+        user_email = export_data[2]
+        recent_order_no = export_data[6]
         print(f'\nOrder successfully submitted!!\nYou will shortly recieve an email instructions to {user_email}')
         print(f'to arrange payment.\n\nYour order number is: {recent_order_no}')
+        summary_order_data()
+        email_print_update_startover()
 
 
 def save_order():
@@ -363,6 +366,7 @@ def save_order():
     else:
         combine_data_for_export()
         summary_order_data()
+        email_print_update_startover()
 
 
 def email_print_update_startover():
@@ -374,22 +378,23 @@ def email_print_update_startover():
     print('Select 5. : Exit this n3orthotics session\n')
 
     startover = input('Your Selection: ')
-    order_no = order_data[6]
+    order_no = order_data[3]
     user_email = user_data[2]
     for i in startover:
         if i == '1':
             print(f'Emailing order number : {order_no} to {user_email}...\n')
-            return True
+            email_print_update_startover()
             # main()
         elif i == '2':
             print(f'Printing order number : {order_no}...\n')
+            email_print_update_startover()
             # get_user_data()
             # instruct_user_data()
             # get_user_data()
         elif i == '3':
-            print('Start a new N3D insole order...\n')
+            print('Start a new N3D insole order...')
             yes_no_user()
-            get_order_data()
+            # get_order_data()
         elif i == '4':
             print('Taking you to retrieve_order function...\n')
         elif i == '5':

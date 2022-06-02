@@ -363,10 +363,13 @@ def submit_order():
         clear_screen()
         generate_order_no()
         combine_data_for_export()
+
+        update_sales_worksheet(export_data)
+
         user_email = export_data[2]
         recent_order_no = export_data[6]
-        print(f'\nOrder successfully submitted!!\nYou will shortly recieve an email instructions to {user_email}')
-        print(f'to arrange payment.\n\nYour order number is: {recent_order_no}')
+        print(f'\nOrder Successfully Submitted!!\nYou will shortly receive an email instructions to:\n {user_email} with the details to arrange secure payment')
+        print(f'\nYour order number is: {recent_order_no}')
         summary_order_data()
         email_print_update_startover()
 

@@ -479,31 +479,41 @@ def generate_order_no():
 #     order_date = n
 
 
-def generate_UTC_time():
+def generate_utc_time():
     """
     Creates Central European Standard Time (CEST) version of date and time
-    in iso 
+    in iso
     """
-    utc_now = datetime.datetime.now(timezone.utc)
+    iso_utc_now = datetime.datetime.now(timezone.utc).isoformat()
     # CEST = pytz.timezone('Europe/Stockholm')
     # UTC = pytz.timezone('Etc/GMT+0')
     # print('{} CEST'.format(utc_now.astimezone(CEST).isoformat()))
     # print('{} UTC'.format(utc_now.astimezone().isoformat()))
-    # print('the supported timezones by the pytz module:', pytz.all_timezones, '\n')
+    # print(
+    #     'the supported timezones by the pytz module:', pytz.all_timezones, '
+    #     '\n')
     # n = '{}'.format(utc_now.astimezone(CEST).isoformat())
-    n = '{}'.format(utc_now.astimezone(UTC).isoformat())
+
+    # iso_format_timezone = '{}'.format(utc_now.astimezone(UTC).isoformat())
+    # iso_format_timezone = datetime.now(timezone.utc).isoformat()
+
+    # print(utc_now)
+    # print(iso_format_timezone)
     # print(export_data)
-    return n
+    # return iso_format_timezone
+    return iso_utc_now
 
 
 def update_date_ordered():
     """
     Updates the order_date filed within order_data list
     """
-    n = generate_UTC_time()
-    order_data[4] = n
+    time_zone = generate_utc_time()
+    order_data[4] = time_zone
     order_data[5] = 'NEW ORDER'
-    print(order_data)
+    # print(order_data)
+
+
 
 
 def input_order_no():

@@ -359,8 +359,12 @@ def get_size_data():
 def get_height_data():
     """
     Height user input converted into ['Low', 'Med', 'High'] for order_data
+    Only strings starting with l, m or h accepted. Not case sensitive.
     """
-    height = remove(input('\nWhat level of support under the inside arch would you like?\n(L: Low Support / M: Medium Support / H: High Support): ').lower())
+    height = remove_blank_space(input(
+        '\nWhat level of support under the inside arch would you like?'
+        '\n(L: Low Support / M: Medium Support / H: High Support): '
+        ).lower())
     if height.startswith('l'):
         order_data[1] = 'Low'
     elif height.startswith('m'):
@@ -368,9 +372,9 @@ def get_height_data():
     elif height.startswith('h'):
         order_data[1] = 'High'
     else:
-        print(f'\nIncorrect information provided for arch height: {height}\n')
+        print(f'\nIncorrect information provided for arch height: {height}')
         get_height_data()
-    print(order_data)
+    # print(order_data)
 
 
 def get_width_data():

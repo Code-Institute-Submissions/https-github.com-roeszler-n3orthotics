@@ -155,47 +155,53 @@ def validate_user_f_name(values):
 
 def validate_user_l_name(values):
     """
-    Inside the try, checks all user_email input syntax.
+    Inside the try, checks all user input syntax.
     Raises ValueError if strings cannot be converted
+    and prompts to replace data in index [1] of the 
+    user_data list = l_name
     """
     try:
         # if (re.fullmatch(REGEX_NAME, values)):
         if values.isalpha():
-            print('Name is valid...')
+            user_data[1] = values.capitalize()
+            print(user_data[1])
         else:
             raise ValueError(
                 f'The name you have provided "{values}" does not seem\nto be in a regular format'
             )
     except ValueError as e:
         print(f'\nInvalid data: {e}. Please check the entry and try again.\n')
-        l_name = remove(input('Your Last Name: ').capitalize())
+        l_name = remove(input('Last Name details : ').capitalize())
         user_data[1] = l_name
+        print(user_data[1])
         validate_user_l_name(l_name)
         # print(user_data)
 
 
-def validate_user_email(user_email):
+def validate_user_email(values):
     """
-    Inside the try, checks all user_email input syntax.
+    Inside the try, checks all user email input syntax.
     Raises ValueError if strings cannot be converted
+    and prompts to replace data in index [2] of the 
+    user_data list = user_email
     """
     values_string = f'{values.split(",")}'
     # print(f'The user_data you provided converted into a list of strings is:\n{values_string}\n')
-
     try:
         if (re.fullmatch(REGEX_EMAIL, values)):
-            print('Email is valid...')
-            yes_no_user()
+            # print('Email is valid...')
+            user_data[2] = values.lower()
+            # yes_no_user()
         else:
             raise ValueError(
                 f'The email you have provided "{values}" does not seem\nto be in a regular format'
             )
-    except ValueError as e:
-        print(f'Invalid data: {e}. Please check the entry and try again.\n')
+    except ValueError as error:
+        print(f'\nInvalid data: {error}. Please check the entry and try again.\n')
         user_email = remove(input('Your Email: ').lower())
         user_data[2] = user_email
-        print(user_data)
-        validate_user_email(values)
+        validate_user_email(user_email)
+        # print(user_data)
 
 
 def remove(string):
@@ -503,6 +509,30 @@ def change_feat():
     # else:
     #     print('False')
     #     # display_order()
+
+
+def validate_change_feat():
+    """
+    Valudates order is prior to 'SUBMITTED TO PRINT' stage for change_feat function
+    """
+    row = order_data[7]
+    order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
+    flat_order = flatten_nested_list(order_row)
+
+    print(f'Current order status is: {flat_order[8]}')
+    if flat_order[8] == 'PENDING' or flat_order[8] == 'NEW ORDER' or flat_order[8] == 'CREATED' or flat_order[8] == 'ACCEPTED' or flat_order[8] == 'DESIGNED':
+        print('Order is modifiable.')
+        print('\nYour order details are as follows:\n')
+        print(f'Order No. : {flat_order[6]}\nDate Ordered : {flat_order[7]}\nPlace in production queue : {flat_order[10]}\nCurrent Status : {flat_order[8]}')
+        print('\nDetails you can edit:\n')
+        print(f'1. First Name : {user_data[0]}\n2. Surname : {user_data[1]}\n3. Email : {user_data[2]}')
+        print(f'4. Shoe Size : EU {order_data[0]}\n5. Arch Height : {order_data[1]}\n6. Insole Width : {order_data[2]}\n')
+        print(f'7. Submit the above details\n8. Take me Home\n')
+        change_feat()
+
+    else:
+        print(f'Unfortunately, at the {flat_order[8]} stage, this order is past the point\nwhere modifications can occur without charges.')
+        email_print_update_startover()
 
 
 def update_status():

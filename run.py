@@ -81,12 +81,13 @@ def instruct_user_data():
     """
     Insruct User on format of first name, last name and email.
     """
+    clear_screen()
+    print('Place a N(3)ORTHOTICS.com N3D printed insole order:\n')
     print('Where prompted below, please enter your name and email.')
-    print('This information should be in a valid syntax, with no spaces. For example:\n')
-
-    print('First Name: Bobby\nLast Name: Hunden')
-    print('Email: bobby123@yourdomain.com\n')
-    # get_user_data()
+    print('This information should be in a valid syntax, with no spaces.')
+    print('For example:\n')
+    print('First Name: Rob\nLast Name: Bertoe')
+    print('Email: rubbertoes@yourdomain.com\n')
 
 
 def get_user_data():

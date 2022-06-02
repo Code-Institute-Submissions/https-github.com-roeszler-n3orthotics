@@ -418,9 +418,21 @@ def retrieve_order():
     Searches worksheet coloum order_no for a match to user input and
     returns row information to local user_data, oder_data and export_data lists
     """
-    order_no = input_order_no()
-    print(order_no)
-    print(export_data)
+    search_input = str(input_order_no())
+    order_nos_import = SHEET.worksheet('orders').get_values('G:G')
+    order_nos = flatten_nested_list(order_nos_import)
+   
+    res = [i for i in range(len(order_nos)) if order_nos[i] == search_input]
+    if res == []:
+        print(f'Order number {search_input} not found?!\n')
+        retrieve_order()
+    else:
+        for i in range(len(order_nos)):
+            if search_input == order_nos[i]:
+                search_res_row = i+1
+                print(f'\nOrder found in database row no.{search_res_row}')
+                # search_res_row = order_data[7]
+                return search_res_row
 
 
 def update_status():
@@ -470,7 +482,7 @@ def update_status():
     update_order[1] = n
     print(update_order)
     print(export_data)
-    
+
 
 def submit_order():
     """
@@ -576,7 +588,6 @@ def main():
 
 main()
 
-
 # get_latest_row_entry()
 # validate_user_email(values='stuart@roeszler.com')
 # validate_user_names(values='stuart Roes3ler')
@@ -594,6 +605,13 @@ main()
 # clear_screen()
 # generate_order_no()
 # generate_date_time()
+# generate_UTC_time()
+# update_date_ordered()
 # instruct_user_data()
 # email_print_update_startover()
 # slice_last_order_no()
+# test_email()
+# export_to_printer()
+# update_status()
+# retrieve_order()
+input_order_no()

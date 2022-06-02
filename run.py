@@ -228,17 +228,17 @@ def get_size_data():
     """
     EU shoe size between EU19 and EU50 converted to a float() for order_data
     """
-    size_eu = float(input('EU Shoe Size (0.5 increments between 19 and 50): '))
+    size_eu = float(input('\nWhat EU Shoe Size would you like to match with?\n(sized in 0.5 increments between 19 and 50): '))
     size_divisble = size_eu % 0.5
     if size_eu >= 19 and size_eu <= 50:
         if size_divisble != 0:
-            print(f'Incorrect information provided for european shoe sizing: {size_eu}\n')
+            print(f'\nIncorrect information provided for european shoe sizing: {size_eu}\n')
             get_size_data()
         else:
             order_data[0] = size_eu
             print(order_data)
     else:
-        print(f'Unfortunatley {size_eu} is not within the european shoe size range we do.\n')
+        print(f'\nUnfortunatley {size_eu} is not within the european shoe size range we do.\n')
         get_size_data()
 
 

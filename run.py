@@ -198,6 +198,19 @@ def yes_no_user():
         get_user_data()
 
 
+def get_order_data():
+    """
+    User input used to order N3D Orthosis. Shoe size, arch height and 
+    device width, with size_eu converted to a .float() 
+    """
+    size_eu = float(input('EU Shoe Size: '))
+    order_data[0] = size_eu
+    print(order_data)
+
+    # get_height_data()
+    # get_width_data()
+
+
 def main():
     """
     Run all program functions

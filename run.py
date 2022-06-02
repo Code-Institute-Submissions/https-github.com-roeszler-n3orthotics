@@ -648,7 +648,40 @@ def update_to_canceled_status():
         # print('false')
         print(f'\nUnfortunatley as a custom-to-order product, this order is currently at a point in\nmanufacture that is beyond the point of no return and cannot be canceled or refunded.\n\nFor further clarificaiton of made-to-order products purchased online, please feel free to contact info@northotics.com refering order number {export_data[6]}.\nYour purchasing rights have not been affected.\n')
         email_print_update_startover()
-    
+
+
+def submit_row_data():
+    """
+    Replaces the exsisting row data in the worksheet with updated data and 
+    records the date of the order update
+    """
+    row = order_data[7]
+    order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
+    order_worksheet = SHEET.worksheet('orders')
+
+    print(f'Accessing your order on row number : {row}')
+    # print(f'order_row :\n{order_row}')
+    # print(f'export_data :\n{export_data}')
+    # print(f'order_data :\n{order_data}')
+    # print(f'user_data :\n{user_data}')
+
+    n = generate_UTC_time()
+    export_data[9] = n
+    export_data[8] = 'UPDATED ORDER'
+    order_worksheet.update(f'A{row}', export_data[0])
+    order_worksheet.update(f'B{row}', export_data[1])
+    order_worksheet.update(f'C{row}', export_data[2])
+    order_worksheet.update(f'D{row}', int(export_data[3]))
+    order_worksheet.update(f'E{row}', export_data[4])
+    order_worksheet.update(f'F{row}', export_data[5])
+    order_worksheet.update(f'G{row}', int(export_data[6]))
+    order_worksheet.update(f'H{row}', export_data[7])
+    order_worksheet.update(f'I{row}', export_data[8])
+    order_worksheet.update(f'J{row}', export_data[9])
+
+    print(f'\nOrder No.{export_data[6]} successfully updated!\nThanks for using the N(3)Orthotics order submission app.\n\nYou should shortly recieve an email to {export_data[2]} confirming the changes')
+    update_status()
+
 
 def submit_order():
     """

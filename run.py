@@ -423,6 +423,55 @@ def retrieve_order():
     print(export_data)
 
 
+def update_status():
+    """
+    
+    """
+    order_no = order_data[3]
+    f_name = user_data[0]
+
+    print(f'\nHi {f_name}. What would you like to do with order no {order_no}?')
+    print('\nSelect 1. : Re-Print this order again (no changes)')
+    print('Select 2. : Change the features')
+    print('Select 3. : Start a new order')
+    print('Select 4. : Cancel order')
+    print('Select 5. : Return to Previous Screen\n')
+
+    startover = input('Your Selection: ')
+    for i in startover:
+        if i == '1':
+            clear_screen()
+            print(f'Re-printing order number : {order_no}...\n')
+            submit_order()
+            # test_email()
+            # email_print_update_startover()
+        elif i == '2':
+            clear_screen()
+            print(f'Change features of order : {order_no}...\n')
+            # email_print_update_startover()
+        elif i == '3':
+            clear_screen()
+            print('Starting a new N3D insole order...')
+            yes_no_user()
+            # get_order_data()
+        elif i == '4':
+            clear_screen()
+            print(f'Cancelling order {order_no}...\n')
+
+        elif i == '5':
+            clear_screen()
+            print('Returning you to previous screen...\n')
+        else:
+            print(f'The number you have provided "{startover}" is not available.\nPlease select again\n')
+            email_print_update_startover()
+
+
+    n = generate_UTC_time()
+    update_order[1] = n
+    print(update_order)
+    print(export_data)
+    
+
 def submit_order():
     """
     

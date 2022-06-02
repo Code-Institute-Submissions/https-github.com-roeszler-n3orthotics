@@ -385,10 +385,14 @@ def update_sales_worksheet(data):
 
 
 def save_order():
+    """
+    
+    """
     save = input('\nWould you like to save this order? y/n: ').lower()
     if save.startswith('n'):
-        user_data.clear()
+        # user_data.clear()
         order_data.clear()
+        export_data.clear()
         clear_screen()
         main()
     else:

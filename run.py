@@ -1062,40 +1062,63 @@ def save_order():
 
 
 def email_print_update_startover():
+    """
+    User descision tree to navigate following a successful submission,
+    fetaure change, save or change of status
+    """
     print('\nWhat would you like to do next?')
-    print('\nSelect 1. : Email this order')
-    print('Select 2. : Print this order')
-    print('Select 3. : Start a new N3D insole order')
-    print('Select 4. : Retrieve an exsisting N3D order')
-    print('Select 5. : Exit this n3orthotics session\n')
+    print('Select 1. : Change the features of this Order')
+    print('Select 2. : Place a new N3D insole order')
+    print('Select 3. : Retrieve an exsisting N(3) order')
+    print('Select 4. : Take Me Home')
+    print('Select 5. : Exit the N(3)Orthotics order portal\n')
+    # print('\nSelect 6. : Email this order (TBC)')
+    # print('Select 7. : Print this order (TBC)')
 
     startover = input('Your Selection: ')
     order_no = order_data[3]
-    user_email = user_data[2]
+    # user_email = user_data[2]
     for i in startover:
         if i == '1':
-            print(f'Emailing order number : {order_no} to {user_email}...\n')
-            email_print_update_startover()
-            # main()
+            clear_screen()
+            print(f'Order No. {order_no}\n')
+            validate_change_feature_of_order()
         elif i == '2':
-            print(f'Printing order number : {order_no}...\n')
-            email_print_update_startover()
-            # get_user_data()
-            # instruct_user_data()
-            # get_user_data()
-        elif i == '3':
-            print('Start a new N3D insole order...')
+            clear_screen()
+            print('Starting a new N3D insole order...')
             yes_no_user()
             # get_order_data()
+        elif i == '3':
+            clear_screen()
+            print('Retrieve an Exsisting Order...\n')
+            display_order()
         elif i == '4':
-            print('Taking you to retrieve_order function...\n')
-        elif i == '5':
-            print('Exiting this n3orthotics session...\n')
+            print('Taking you to home page...\n')
             clear_screen()
             start()
             select_option()
+        elif i == '5':
+            print('Exiting this n3orthotics session...\n')
+            clear_screen()
+            exit()
+        # elif i == '6':
+        #     clear_screen()
+        #     print(f'Emailing order number : {order_no} to {user_email}...\n')
+        #     # test_email()
+        #     email_print_update_startover()
+        #     # main()
+        # elif i == '7':
+        #     clear_screen()
+        #     print(f'Printing order number : {order_no}...\n')
+        #     email_print_update_startover()
+        #     # get_user_data()
+        #     # instruct_user_data()
+        #     # get_user_data()
         else:
-            print(f'The number you have provided "{startover}" is not available.\nPlease select again\n')
+            print(
+                f'The number you have provided "{startover}" is not available.'
+                '\nPlease select again\n'
+                )
             email_print_update_startover()
 
 

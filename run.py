@@ -274,14 +274,19 @@ def get_width_data():
     width = remove(input('\nWidth of insole to fit the foot &/or shoe\n(N: Narrow / S: Standard / W: Wide): ').lower())
     if width.startswith('n'):
         order_data[2] = 'Narrow'
+        # generate_order_no()
+        # submit_order()
     elif width.startswith('s'):
         order_data[2] = 'Standard'
+        # generate_order_no()
+        # submit_order()
     elif width.startswith('w'):
         order_data[2] = 'Wide'
+        # generate_order_no()
+        # submit_order()
     else:
         print(f'\nIncorrect information provided for insole width: {width}\n')
         get_width_data()
-    print(order_data)
 
 
 def combine_data_for_export():

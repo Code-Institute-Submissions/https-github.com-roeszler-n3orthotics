@@ -20,7 +20,8 @@ SHEET = GSPREAD_CLIENT.open('n3orthotics')
 REGEX_EMAIL = r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'
 
 user_data = ['f_name', 'l_name', 'user_email']
-order_data = ['size_eu', 'height', 'width', 'order_no']
+order_data = ['size_eu', 'height', 'width', 'order_no', 'order_date', 'order_status']
+update_order = ['order_status', 'order_update']
 export_data = []
 
 
@@ -231,23 +232,31 @@ def get_order_data():
 
 def get_size_data():
     """
-    EU shoe size between EU19 and EU50 converted to a float() for order_data
+    Converts to a float() between EU shoe size between EU19 and EU50 only.
+    Inside the try, converts all string values into floating points and
+    raises ValueError if not a number.
     """
-    size_eu = float(input('\nWhat EU Shoe Size would you like to match with?\n(sized in 0.5 increments between 19 and 50): '))
-    size_divisble = size_eu % 0.5
-    if size_eu >= 19 and size_eu <= 50:
-        if size_divisble != 0:
-            print(f'\nIncorrect information provided for european shoe sizing: {size_eu}\n')
-            get_size_data()
-        else:
-            order_data[0] = size_eu
-            print(order_data)
-            # generate_order_no()
-            # submit_order()
-            # get_height_data()
-    else:
-        print(f'\nUnfortunatley {size_eu} is not within the european shoe size range we do.\n')
-        get_size_data()
+    while True:
+        try:
+            size_eu = float(remove(input('\nWhat EU Shoe Size would you like to match with?\n(sized in 0.5 increments between 19 and 50): ')))
+            size_divisble = size_eu % 0.5
+
+            if size_eu >= 19 and size_eu <= 50:
+                if size_divisble != 0:
+                    print(f'\nIncorrect information provided for european shoe sizing: {size_eu}\n')
+                    get_size_data()
+                else:          
+                    order_data[0] = size_eu
+                    return size_eu
+            else:
+                print(f'\nUnfortunatley {size_eu} is not within the european shoe size range we do.\n')
+                get_size_data()
+
+        except ValueError as e:
+            print(f'Invalid data : {e}, please try again.\n')
+            # return False
+            continue
+        return True
 
 
 def get_height_data():
@@ -350,6 +359,23 @@ def generate_order_no():
 #     print(type(n))
 #     print(n)
 #     order_date = n
+
+
+def generate_UTC_time():
+    """
+    Creates Central European Standard Time (CEST) version of date and time
+    in iso 
+    """
+    utc_now = datetime.datetime.now(timezone.utc)
+    # CEST = pytz.timezone('Europe/Stockholm')
+    # UTC = pytz.timezone('Etc/GMT+0')
+    # print('{} CEST'.format(utc_now.astimezone(CEST).isoformat()))
+    # print('{} UTC'.format(utc_now.astimezone().isoformat()))
+    # print('the supported timezones by the pytz module:', pytz.all_timezones, '\n')
+    # n = '{}'.format(utc_now.astimezone(CEST).isoformat())
+    n = '{}'.format(utc_now.astimezone(UTC).isoformat())
+    # print(export_data)
+    return n
 
 
 def submit_order():

@@ -329,11 +329,13 @@ def main():
     """
     Run all program functions
     """
+    start()
+    select_option()
     instruct_user_data()
-    # user = get_user_data()
-
-
-main()
+    user = get_user_data()
+    summary_order_data()
+    combine_data_for_export()
+    # submit_order()
 
 # main()
 

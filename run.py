@@ -84,8 +84,27 @@ def summary_user_data():
     print('------------')
     print(f'Full Name: {f_name} {l_name}\nEmail: {user_email}')
     print('------------')
-    
 
+
+def validate_user_f_name(values):
+    """
+    Inside the try, checks all user_email input syntax.
+    Raises ValueError if strings cannot be converted
+    """
+    try:
+        # if (re.fullmatch(REGEX_NAME, values)):
+        if values.isalpha():
+            print('Name is valid...')
+        else:
+            raise ValueError(
+                f'The name you have provided "{values}" does not seem\nto be in a regular format'
+            )
+    except ValueError as e:
+        print(f'\nInvalid data: {e}. Please check the entry and try again.\n')
+        f_name = remove(input('Your First Name: ').capitalize())
+        user_data[0] = f_name
+        validate_user_f_name(f_name)
+        # print(user_data)
 
 def validate_user_names(values):
     """

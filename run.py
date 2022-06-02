@@ -163,17 +163,21 @@ def get_latest_row_entry():
     email = orders[-1]
     print(email)
 
+
 def yes_no_user():
     correct = input('Is this information correct? y/n: ').lower()
     if correct.startswith('y'):
         # print(f'Thanks *** , updating worksheet and proceeding to order_data\n')
         return True
     else:
-        main()
+        get_user_data()
+
+
 def main():
     """
     Run all program functions
     """
+    instruct_user_data()
     user = get_user_data()
 main()
 

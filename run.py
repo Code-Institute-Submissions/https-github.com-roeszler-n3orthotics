@@ -3,7 +3,8 @@ Main running file n(3)orthotics order portal
 """
 import gspread
 from google.oauth2.service_account import Credentials
-import re
+import re # regular extensions import for checking syntax of email
+import os
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -61,8 +62,26 @@ def get_user_data():
     yes_no_user()
 
 
-    # user_data = [f_name, l_name, user_email]
-    # print(user_data)
+def validate_user_names(values):
+    """
+    Inside the try, checks all user_email input syntax.
+    Raises ValueError if strings cannot be converted
+    """
+    # values_string = f'{values.split(",")}'
+    # print(f'The user_data you provided converted into a list of strings is:\n{values_string}\n')
+
+    try:
+        # if (re.fullmatch(REGEX_NAME, values)):
+        if values.isalpha():
+            print('Name is valid...')
+        else:
+            raise ValueError(
+                f'The name you have provided "{values}" does not seem\nto be in a regular format'
+            )
+    except ValueError as e:
+        print(f'Invalid data: {e}. Please check the entry and try again.\n')
+        get_user_data()
+
 
 def validate_user_email(values):
     """

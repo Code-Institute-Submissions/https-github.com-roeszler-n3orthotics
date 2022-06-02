@@ -293,6 +293,24 @@ def clear_screen():
         _ = os.system('cls')
     # print("Screen Cleared")
 
+def submit_order():
+    submit = input('\nWould you like to submit this order? y/n: ').lower()
+    if submit.startswith('n'):
+        save = input('\nWould you like to save this order? y/n: ').lower()
+        if save.startswith('n'):
+            user_data.clear()
+            order_data.clear()
+            main()
+        else:
+            combine_data_for_export()
+            summary_order_data()
+    else:
+        combine_data_for_export()
+        user_email = 
+        order_no = 
+        print(f'Order submitted. You will recieve an email instructions to {user_email}')
+        print(f'to arrange payment. Your order number is: {order_no}')
+        summary_order_data()
 
 def main():
     """
@@ -304,12 +322,18 @@ def main():
 
 main()
 
+# main()
+
 # get_latest_row_entry()
-# validate_user_data()
+# validate_user_email(values='stuart@roeszler.com')
 # validate_user_names(values='stuart Roes3ler')
 # yes_no_user()
 # select_option()
 # start()
-# get_height_data()
-# get_width_data()
+# get_order_data()
 # get_size_data()
+# summary_order_data()
+# submit_order()
+save_order()
+# combine_data_for_export()
+# clear_screen()

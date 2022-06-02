@@ -875,7 +875,7 @@ def update_status():
 
 def cancel_confirm():
     """
-    
+    Confirms the user input to cancel order and returns to main screen
     """
     confirm = input('Are you sure you wish to cancel this order? y/n : ')
     if confirm.startswith('y'):
@@ -889,26 +889,54 @@ def update_to_canceled_status():
     Updates status to pending when user saves order
     """
     row = order_data[7]
-    order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
-    order_worksheet = SHEET.worksheet('orders') # accessing our order_worksheet from our google sheet
-
-    print(f'\nCurrent order status is: {export_data[8]}\n')
-
-    if export_data[8] == 'PENDING' or export_data[8] == 'NEW ORDER' or flat_order[8] == 'UPDATED ORDER' or export_data[8] == 'CREATED' or export_data[8] == 'ACCEPTED' or export_data[8] == 'DESIGNED':
-        # print('true')
+    # order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
+# accessing our order_worksheet from our google sheet
+    order_worksheet = SHEET.worksheet('orders')
+    print(f'Current order status is: {export_data[8]}')
+    if export_data[8] == 'PENDING' or export_data[8] == 'NEW ORDER' or \
+            export_data[8] == 'UPDATED ORDER' or export_data[8] == 'CREATED' \
+            or export_data[8] == 'ACCEPTED' or export_data[8] == 'DESIGNED':
+        print('Order is modifiable.\n')
         cancel_confirm()
-        n = generate_UTC_time()
-        export_data[9] = n
+        iso_format_timezone = generate_utc_time()
+        export_data[9] = iso_format_timezone
         export_data[8] = 'CANCELED'
-        order_worksheet.update(f'I{row}', f'{export_data[8]}') # updating cell i in colom I
-        order_worksheet.update(f'J{row}', f'{export_data[9]}') # updating cell i in colom J
-        print(f'\nOrder successfully CANCELED.')
-        print(f"An email with it's credit note details will be sent to {export_data[2]}")
-        print(f'\nPlease carefully record the order no.{export_data[6]}\nYou will need it to refer to this action into the future.')
+# updating cell i in colom I
+        order_worksheet.update(f'I{row}', f'{export_data[8]}')
+# updating cell i in colom J
+        order_worksheet.update(f'J{row}', f'{export_data[9]}')
+        print('\nOrder successfully CANCELED.')
+        print(
+            f"An email with it's credit note details will be sent to"
+            f' {export_data[2]}'
+            )
+        print(
+            f'\nPlease carefully record the order no. {export_data[6]}'
+            '\nYou will need it to refer to this action into the future.'
+            )
         email_print_update_startover()
     else:
         # print('false')
-        print(f'\nUnfortunatley as a custom-to-order product, this order is currently at a point in\nmanufacture that is beyond the point of no return and cannot be canceled or refunded.\n\nFor further clarificaiton of made-to-order products purchased online, please feel free to contact info@northotics.com refering order number {export_data[6]}.\nYour purchasing rights have not been affected.\n')
+        print(
+            'Unfortunatley as a custom made product, this order is already at'
+            f' the {export_data[8]} stage.'
+            )
+        print(
+            '\nFrom this point manufacturing has already commenced. As it '
+            '\nis made to your specifications, the window to alter or cancel '
+            '\nthe order has passed.'
+            )
+        print(
+            '\nFor further clarificaiton of made-to-order products purchased'
+            ' online,'
+            '\nspecifically section 13(1)(c) of the UK Distance Selling'
+            ' Regulations, please visit: '
+            'https://www.legislation.gov.uk/uksi/2000/2334/contents/made. '
+            '\nAlternately, contact info@northotics.com refering order '
+            'number :'
+            f' {export_data[6]}.'
+            '\nYour purchasing rights have not been affected.\n'
+            )
         email_print_update_startover()
 
 

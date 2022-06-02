@@ -484,31 +484,51 @@ def change_feat():
     """
     
     """
-    row = order_data[7]
-    order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
-    flat_order = flatten_nested_list(order_row)
-
-    print(f'\nCurrent order status is: {export_data[8]}\n')
-    print(flat_order)
-    print(order_data[7])
-    print(type(order_data[7]))
-    print(export_data[9])
-
-    print('\nYour order details are as follows:\n')
-    print(f'Order No. : {flat_order[6]}\nDate Ordered : {flat_order[7]}\nPlace in production queue : {flat_order[10]}\n')
-
-    print('\nDetails you can edit:\n')
-    print(f'1. Full Name : {user_data[0]} {flat_order[1]}\n2. Email : {flat_order[2]}')
-    print(f'3. Shoe Size : EU {flat_order[3]}\n4. Arch Height : {flat_order[4]}\n5. Insole Width : {flat_order[5]}')
-    print(f'6. Current Status : {flat_order[8]}\n')
-
-    input('Which feature(s) would you like to change? : ')
-
-    # if export_data[8] == 'PENDING' or export_data[8] == 'NEW ORDER' or export_data[8] == 'CREATED' or export_data[8] == 'ACCEPTED' or export_data[8] == 'DESIGNED':
-    #     print('True')
-    # else:
-    #     print('False')
-    #     # display_order()
+    i = input('Your Selection : ')
+    if i == '1':
+        clear_screen()
+        f_name = input('New First Name details: ')
+        validate_user_f_name(f_name)
+        f_name = user_data[0]
+        # print(f_name)
+        # export_data[0] = f_name
+        validate_change_feat()
+    #     print(f'user_data:\n {user_data}')
+    #     print(order_data)
+    #     print(f'order_data:\n {order_data}')
+    #     print(export_data)
+    #     print(f'export_data:\n {export_data}')
+    #     print(flat_order)
+    #     print(f'flat_order:\n {flat_order}')
+    elif i == '2':
+        clear_screen()
+        l_name = input('New Last Name details: ')
+        validate_user_l_name(l_name)
+        l_name = user_data[1]
+        # print(user_data[1])
+        validate_change_feat()
+    elif i == '3':
+        clear_screen()
+        user_email = input('New Email details: ')
+        validate_user_email(user_email)
+        user_email = user_data[2]
+        # print(user_data[2])
+        validate_change_feat()
+    elif i == '4':
+        print('size_eu : ')
+    elif i == '5':
+        print('Height : ')
+    elif i == '6':
+        print('Width : ')
+    elif i == '7':
+        print('Submit : ')
+        combine_data_for_export()
+        print(export_data)
+    elif i == '8':
+        main()
+    else:
+        print(f'The number you have provided "{selection}" is not part of this selection.\nPlease select again\n')
+        validate_change_feat()
 
 
 def validate_change_feat():

@@ -443,16 +443,20 @@ def main():
     """
     Run all program functions
     """
+    clear_screen()
     start()
     select_option()
     instruct_user_data()
-    user = get_user_data()
+    get_user_data()
     summary_order_data()
+    # generate_order_no()
     combine_data_for_export()
     submit_order()
 
 
 main()
+
+
 # get_latest_row_entry()
 # validate_user_email(values='stuart@roeszler.com')
 # validate_user_names(values='stuart Roes3ler')
@@ -471,4 +475,5 @@ main()
 # generate_order_no()
 # generate_date_time()
 # instruct_user_data()
-email_print_update_startover()
+# email_print_update_startover()
+# slice_last_order_no()

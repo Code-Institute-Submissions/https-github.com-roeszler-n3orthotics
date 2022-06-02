@@ -1124,19 +1124,21 @@ def email_print_update_startover():
 
 def main():
     """
-    Run all program functions
+    Run all primary program functions
     """
     clear_screen()
     start()
     select_option()
     instruct_user_data()
     get_user_data()
+    clear_screen()
+    yes_no_user()
     summary_order_data()
     combine_data_for_export()
-    submit_order()
+    # submit_order()
 
-# main()
 
+main()
 
 # get_latest_row_entry()
 # validate_user_email(values='stuart@roeszler.com')
@@ -1155,18 +1157,68 @@ def main():
 # clear_screen()
 # generate_order_no()
 # generate_date_time()
-# generate_UTC_time()
+# generate_utc_time()
 # update_date_ordered()
 # instruct_user_data()
 # email_print_update_startover()
 # slice_last_order_no()
-# test_email()
+# test_email() # not yet working
 # export_to_printer()
 # update_status()
-# retrieve_order() 
-display_order()
+retrieve_order()
+# display_order()
 # input_order_no()
 # update_to_pending_status()
 # update_to_canceled_status()
 # cancel_confirm()
-# validate_change_feat()
+# validate_change_feature_of_order()
+# generate_row_no()
+# test()
+
+
+
+
+# Testing email details SSL
+# def test_email():
+#     """
+#     Accesses Email account to send summary information of order
+#     """
+#     port = 465  # For SSL
+#     smtp_server = "smtp.gmail.com"
+#     sender_email = "testingn3d@gmail.com"  # Enter your address
+#     receiver_email = user_data[2] # retrieves the receiver address
+#     print(receiver_email)
+#     password = input("Type your password and press enter: ")
+#     message = """\
+#     Subject: Hi there
+#     This message is sent from Python."""
+
+#     context = ssl.create_default_context()
+#     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+#         server.login(sender_email, password)
+#         server.sendmail(sender_email, receiver_email, message)
+
+# # Testing email details TLS
+# def test_email():
+#     port = 587  # For starttls
+#     smtp_server = "smtp.gmail.com"
+#     sender_email = "testingn3d@gmail.com"
+# # retrieves the receiver address
+#     receiver_email = user_data[2]
+#     password = input(
+#         "Type the testing password provided by developer and press enter: "
+#         )
+#     message = """\
+#     Subject: Hi there
+
+#     This message is sent from Python."""
+
+#     context = ssl.create_default_context()
+#     with smtplib.SMTP(smtp_server, port) as server:
+#         # server.ehlo()  # Can be omitted
+#         server.starttls(context=context)
+#         # server.ehlo()  # Can be omitted
+#         server.login(sender_email, password)
+#         server.sendmail(sender_email, receiver_email, message)
+
+# order_date = ''

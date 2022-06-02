@@ -122,23 +122,36 @@ def summary_order_data():
 
 def validate_user_f_name(values):
     """
-    Inside the try, checks all user_email input syntax.
+    Inside the try, checks all user input syntax.
     Raises ValueError if strings cannot be converted
+    and prompts to replace data in index [0] of the 
+    user_data list = f_name
     """
+    # f_name = (f'{values}')
+    # print(values)
     try:
         # if (re.fullmatch(REGEX_NAME, values)):
         if values.isalpha():
-            print('Name is valid...')
+            # print('Name is valid...')
+            # f_name = values
+            user_data[0] = values.capitalize()
+            # print(values)
+            # return True
         else:
             raise ValueError(
                 f'The name you have provided "{values}" does not seem\nto be in a regular format'
             )
     except ValueError as e:
         print(f'\nInvalid data: {e}. Please check the entry and try again.\n')
-        f_name = remove(input('Your First Name: ').capitalize())
+        f_name = remove(input('First Name details: ').capitalize())
         user_data[0] = f_name
+        # print(user_data[0])
         validate_user_f_name(f_name)
         # print(user_data)
+    # else:
+    #     f_name = (f'{values}')
+    #     user_data[0] = f_name
+
 
 def validate_user_l_name(values):
     """

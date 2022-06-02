@@ -194,24 +194,27 @@ def validate_user_l_name(values):
     """
     Inside the try, checks all user input syntax.
     Raises ValueError if strings cannot be converted
-    and prompts to replace data in index [1] of the 
+    and prompts to replace data in index [1] of the
     user_data list = l_name
     """
     try:
         # if (re.fullmatch(REGEX_NAME, values)):
         if values.isalpha():
             user_data[1] = values.capitalize()
-            print(user_data[1])
+            # print(user_data[1])
         else:
             raise ValueError(
-                f'The name you have provided "{values}" does not seem\nto be in a regular format'
+                f'The name you have provided "{values}" does not seem'
+                f'to be in a regular format'
             )
-    except ValueError as e:
-        print(f'\nInvalid data: {e}. Please check the entry and try again.\n')
-        l_name = remove(input('Last Name details : ').capitalize())
-        user_data[1] = l_name
-        print(user_data[1])
+    except ValueError as error:
+        print(
+            f'\nInvalid data: {error}. Please check the entry and try again.\n'
+            )
+        l_name = remove_blank_space(input('Your Last Name : ').capitalize())
+        # print(user_data[1])
         validate_user_l_name(l_name)
+        user_data[1] = l_name
         # print(user_data)
 
 

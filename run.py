@@ -45,23 +45,35 @@ def start():
     print('Select 1. : Place a new N3D insole order')
     print('Select 2. : Retrieve an exsisting N3D order')
     print('Select 3. : Exit Program\n')
-    select_option()
+    # select_option()
 
 
 def select_option():
+    """
+    Initial user choice to place a new or retieve an exsisting N3D order
+    """
     correct = input('Your Selection: ')
     for i in correct:
         if i == '1':
             # print('Updating worksheet and proceeding to order_data...\n')
-            # return True
-            main()
+            # order_data.clear()
+            # export_data.clear()
+            return True
+            # main()
         elif i == '2':
-            print('Taking you to retrieve_order function...\n')
+            clear_screen()
+            print('Retieve an esxisting N3D insole order : \n')
+            display_order()
             # get_user_data()
             # instruct_user_data()
             # get_user_data()
+        elif i == '3':
+            clear_screen()
+            quit()
         else:
-            print(f'The number you have provided "{correct}" is not available.\nPlease select again\n')
+            print(
+                f'The number you have provided "{correct}" is not available.')
+            print('Please select again\n')
             select_option()
 
 

@@ -228,6 +228,23 @@ def get_height_data():
     print(order_data)
 
 
+def get_width_data():
+    """
+    
+    """
+    width = remove(input('Width (N: Narrow / S: Standard / W: Wide): ').lower())
+    if width.startswith('n'):
+        order_data[2] = 'Narrow'
+    elif width.startswith('s'):
+        order_data[2] = 'Standard'
+    elif width.startswith('w'):
+        order_data[2] = 'Wide'
+    else:
+        print(f'Incorrect information provided for device width: {width}\n')
+        get_width_data()
+    print(order_data)
+
+
 def main():
     """
     Run all program functions

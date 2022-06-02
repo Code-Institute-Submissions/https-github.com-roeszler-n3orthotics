@@ -28,6 +28,7 @@ order_data = [
     ]
 update_order = ['order_status', 'order_update']
 export_data = []
+search_row = [0]
 
 
 def start():
@@ -430,6 +431,7 @@ def input_order_no():
     while True:
         try:
             order_no = int(remove_blank_space(input('You Order Number: ')))
+            search_row[0] = order_no
             order_no_string = str(order_no)
             if len(order_no_string) != 10:
                 raise ValueError(
@@ -472,7 +474,6 @@ def retrieve_order():
         ]
     if order_match == []:
         print(f'Order number {search_input} not found?!\n')
-        search_input.clear()
         retrieve_order()
     else:
         row_location = [
@@ -480,6 +481,10 @@ def retrieve_order():
             if order_no == search_input
             ]
         search_match_row = row_location[0]
+        search_row[0] = search_match_row
+        # search_match_row = search_row[0]
+        # print(search_match_row)
+        # print(type(search_match_row))
         return search_match_row
 
 
@@ -489,7 +494,12 @@ def display_order():
     Converts specific string values back into integers and
     Displays entire order as a list
     """
-    row = int(retrieve_order())
+    # row = int(retrieve_order())
+    retrieve_order()
+    row = search_row[0]
+    # row = search_row[0]
+    # search_row = retrieve_order()
+    # row = int(search_row[0])
     order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
     flat_order = flatten_nested_list(order_row)
     size_eu = flat_order[3]
@@ -864,3 +874,6 @@ def main():
 
 
 main()
+
+
+# retrieve_order()

@@ -980,22 +980,41 @@ def submit_row_data():
 
 def submit_order():
     """
-    
+    User choice to deny or confirm order submission.
+    Confirn compiles list from user_data and oder_data then
+    exports it to update_sales-worksheet function
     """
-    submit = input('Would you like to submit this order? y/n: ').lower()
+    submit = input('\nWould you like to submit this order? y/n: ').lower()
     if submit.startswith('n'):
         save_order()
     else:
         clear_screen()
         generate_order_no()
+        update_date_ordered()
         combine_data_for_export()
+        generate_row_no()
+        update_order_worksheet(export_data)
 
-        update_sales_worksheet(export_data)
-
-        user_email = export_data[2]
+        # user_email = export_data[2]
+# updates order number for export to gsheets
         recent_order_no = export_data[6]
-        print(f'\nOrder Successfully Submitted!!\nYou will shortly receive an email instructions to:\n {user_email} with the details to arrange secure payment')
+# ensures order row data is same as export row data
+        order_data[7] = export_data[10]
+        # print(export_data[10])
+        # print(order_data[7])
+# updates local order data for change feat
+        # recent_order_no = order_data[7]
+        submitted_time = export_data[7]
+
+        print('Order Successfully Submitted!!')
+        # print(
+        #     '\nYou will shortly receive an email instructions to:'
+        #     f'\n{user_email} with the details to arrange secure payment.'
+        #     )
         print(f'\nYour order number is: {recent_order_no}')
+        print(f'Submitted on: {submitted_time}')
+        # print(export_data)
+
         summary_order_data()
         email_print_update_startover()
 

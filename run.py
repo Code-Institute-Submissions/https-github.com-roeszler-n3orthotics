@@ -692,55 +692,50 @@ def display_order():
     update_status()
 
 
-def change_feat():
+def validate_change_feature_of_order():
     """
-    
+    Valudates order is prior to 'SUBMITTED TO PRINT' stage for
+    change_feature_of_order function
     """
-    i = input('Your Selection : ')
-    if i == '1':
-        clear_screen()
-        f_name = input('New First Name details: ')
-        validate_user_f_name(f_name)
-        f_name = user_data[0]
-        # print(f_name)
-        # export_data[0] = f_name
-        validate_change_feat()
-    #     print(f'user_data:\n {user_data}')
-    #     print(order_data)
-    #     print(f'order_data:\n {order_data}')
-    #     print(export_data)
-    #     print(f'export_data:\n {export_data}')
-    #     print(flat_order)
-    #     print(f'flat_order:\n {flat_order}')
-    elif i == '2':
-        clear_screen()
-        l_name = input('New Last Name details: ')
-        validate_user_l_name(l_name)
-        l_name = user_data[1]
-        # print(user_data[1])
-        validate_change_feat()
-    elif i == '3':
-        clear_screen()
-        user_email = input('New Email details: ')
-        validate_user_email(user_email)
-        user_email = user_data[2]
-        # print(user_data[2])
-        validate_change_feat()
-    elif i == '4':
-        print('size_eu : ')
-    elif i == '5':
-        print('Height : ')
-    elif i == '6':
-        print('Width : ')
-    elif i == '7':
-        print('Submit : ')
-        combine_data_for_export()
-        print(export_data)
-    elif i == '8':
-        main()
+    row = order_data[7]
+    # row = export_data[10]
+    order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
+    flat_order = flatten_nested_list(order_row)
+    print(f'Current order status is: {flat_order[8]}')
+    if flat_order[8] == 'PENDING' or flat_order[8] == 'NEW ORDER' or \
+            flat_order[8] == 'UPDATED ORDER' or flat_order[8] == 'CREATED' or \
+            flat_order[8] == 'ACCEPTED' or flat_order[8] == 'DESIGNED':
+        print('Order is modifiable.')
+        print('\nYour order details are as follows:\n')
+        print(
+            f'Order No. : {flat_order[6]}'
+            f'\nDate Ordered : {flat_order[7]}'
+            f'\nDatabase Row entry : {flat_order[10]}'
+            f'\nCurrent Status : {flat_order[8]}'
+            )
+        print('\nDetails you can edit:\n')
+        print(
+            f'1. First Name : {user_data[0]}'
+            f'\n2. Surname : {user_data[1]}'
+            f'\n3. Email : {user_data[2]}'
+            )
+        print(
+            f'4. Shoe Size : EU {order_data[0]}'
+            f'\n5. Arch Height : {order_data[1]}'
+            f'\n6. Insole Width : {order_data[2]}\n'
+            )
+        print(
+            '7. Submit the above details'
+            # '\n8. Re-Print without changes'
+            '\n8. Take me Home\n'
+            )
+        change_feature_of_order()
     else:
-        print(f'The number you have provided "{selection}" is not part of this selection.\nPlease select again\n')
-        validate_change_feat()
+        print(
+            f'\nAt the {flat_order[8]} stage, this order is beyond the point'
+            'in production\nwhere modifications can occur.'
+            )
+        email_print_update_startover()
 
 
 def validate_change_feat():

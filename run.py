@@ -435,34 +435,36 @@ def clear_screen():
 
 
 def slice_last_order_no():
+    """
+    Steps order number back by one value to account for the heading information
+    within gsheets document.
+    """
     order_no = SHEET.worksheet('orders').get_values('G:G')
     last_index = len(order_no) - 1
     last_entry = order_no[last_index]
     last_entry_int = last_entry[0]
-    x = slice(6)
-    reset_no = int(last_entry_int[x])
-    reset_no_10K = reset_no * 10000
+    slice_last_digit = slice(6)
+    reset_no = int(last_entry_int[slice_last_digit])
+    reset_no_to_ten_thousand = reset_no * 10000
     # print(type(reset_no))
-    return reset_no_10K
+    return reset_no_to_ten_thousand
 
 
 def generate_order_no():
     """
-    
+    Generates an order number with todays date + increment from previoius
+    order entry in worksheet
     """
     order_no = SHEET.worksheet('orders').get_values('G:G')
     last_index = len(order_no) - 1
     last_entry = order_no[last_index]
     last_entry_int = int(last_entry[0])
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(timezone.utc)
     order_date = now.strftime('%y%m%d')
-    new_order_no = (int(order_date)*10000) + (last_entry_int - slice_last_order_no() + 1)
-
+    new_order_no = (
+        int(order_date)*10000) + (last_entry_int - slice_last_order_no() + 1)
     order_data[3] = new_order_no
-    # print(type(new_order_no))
     # print(new_order_no)
-    # print(type(order_data[3]))
-    # print(order_data[3])
     return new_order_no
 
 

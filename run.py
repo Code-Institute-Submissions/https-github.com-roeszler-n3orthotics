@@ -315,8 +315,8 @@ def get_order_data():
     Collection of User input used to order N3D Orthosis.
     """
     get_size_data()
-    # get_height_data()
-    # get_width_data()
+    get_height_data()
+    get_width_data()
 
 
 def get_size_data():
@@ -327,25 +327,33 @@ def get_size_data():
     """
     while True:
         try:
-            size_eu = float(remove(input('\nWhat EU Shoe Size would you like to fit into?\n(sized in 0.5 increments between 19 and 50): ')))
+            size_eu = float(remove_blank_space(input(
+                '\nWhat EU Shoe Size would you like to fit into?'
+                '\n(sized in 0.5 increments between 19 and 50): '
+                )))
             size_divisble = size_eu % 0.5
 
             if size_eu >= 19 and size_eu <= 50:
                 if size_divisble != 0:
-                    print(f'\nIncorrect information provided for european shoe sizing: {size_eu}\n')
+                    print(
+                        '\nIncorrect information provided for european'
+                        f'shoe sizing: {size_eu}'
+                        )
                     get_size_data()
-                else:          
+                else:
                     order_data[0] = size_eu
                     return size_eu
             else:
-                print(f'\nUnfortunatley {size_eu} is not within the european shoe size range we do.\n')
+                print(
+                    f'\nUnfortunatley {size_eu} is not within the european'
+                    'shoe size range we do.'
+                    )
                 get_size_data()
-
-        except ValueError as e:
-            print(f'Invalid data : {e}, please try again.\n')
+        except ValueError as error:
+            print(f'Invalid data : {error}, please try again.\n')
             # return False
             continue
-        return True
+        # return True
 
 
 def get_height_data():

@@ -379,9 +379,13 @@ def get_height_data():
 
 def get_width_data():
     """
-    Width user input converted into ['Narrow', 'Standard', 'Wide'] for order_data
+    Width user input converted into ['Narrow', 'Standard', 'Wide'] for
+    order_data
     """
-    width = remove(input('\nWidth of insole to fit the foot &/or shoe\n(N: Narrow / S: Standard / W: Wide): ').lower())
+    width = remove_blank_space(input(
+        '\nWidth of insole to fit the foot &/or shoe'
+        '\n(N: Narrow / S: Standard / W: Wide): '
+        ).lower())
     if width.startswith('n'):
         order_data[2] = 'Narrow'
         # generate_order_no()
@@ -395,16 +399,27 @@ def get_width_data():
         # generate_order_no()
         # submit_order()
     else:
-        print(f'\nIncorrect information provided for insole width: {width}\n')
+        print(f'\nIncorrect information provided for insole width: {width}')
         get_width_data()
+    # print(order_data)
 
 
 def combine_data_for_export():
+    """
+    Loops through user_data then order_data to create single export_data
+    list in preparation to update_order_worksheet
+    """
+    clear_screen()
+    export_data.clear()
     for i in user_data:
         export_data.append(i)
+        # export_data.update(i)
     for i in order_data:
         export_data.append(i)
-    # print(order_data)
+        # export_data.update(i)
+    export_data.pop()
+    # print(export_data)
+    return export_data
 
 
 def clear_screen():

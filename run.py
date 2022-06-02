@@ -413,6 +413,16 @@ def input_order_no():
         return order_no
 
 
+def retrieve_order():
+    """
+    Searches worksheet coloum order_no for a match to user input and
+    returns row information to local user_data, oder_data and export_data lists
+    """
+    order_no = input_order_no()
+    print(order_no)
+    print(export_data)
+
+
 def submit_order():
     """
     

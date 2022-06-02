@@ -211,12 +211,29 @@ def get_order_data():
     # get_width_data()
 
 
+def get_height_data():
+    """
+    
+    """
+    height = remove(input('Arch Height (L: Low Arch / M: Med Arch / H: High Arch): ').lower())
+    if height.startswith('l'):
+        order_data[1] = 'Low'
+    elif height.startswith('m'):
+        order_data[1] = 'Med'
+    elif height.startswith('h'):
+        order_data[1] = 'High'
+    else:
+        print(f'Incorrect information provided for arch height: {height}\n')
+        get_height_data()
+    print(order_data)
+
+
 def main():
     """
     Run all program functions
     """
     instruct_user_data()
-    user = get_user_data()
+    # user = get_user_data()
 
 
 main()

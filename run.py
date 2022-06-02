@@ -48,8 +48,10 @@ def get_user_data():
     l_name = input('Your Last Name: ')
     user_email = input('Your Email: ')
 
-    print(f'\nThanks {f_name}. Your user details are as follows: \n')
-    print(f'Full name: {f_name} {l_name}\nEmail: {user_email}\n')
+    print(f'\nThanks {f_name}. Your user details are as follows:')
+    print('------------')
+    print(f'Full Name: {f_name.capitalize()} {l_name.capitalize()}\nEmail: {user_email.lower()}')
+    print('------------\n')
 
 def main():
     """

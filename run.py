@@ -296,31 +296,47 @@ def clear_screen():
 
 
 def generate_order_no():
+    """
+    
+    """
     order_no = SHEET.worksheet('orders').get_values('G:G')
     last_index = len(order_no) - 1
     last_entry = order_no[last_index]
     last_entry_int = int(last_entry[0])
-    new_order_no = last_entry_int + 1
+    now = datetime.datetime.now()
+    order_date = now.strftime('%y%m%d')
+    new_order_no = (int(order_date)*10000) + last_entry_int + 1
     order_data[3] = new_order_no
-    print(order_data)
+    # print(type(new_order_no))
+    # print(new_order_no)
+    # print(type(order_data[3]))
+    # print(order_data[3])
+
+# def generate_date_time():
+#     now = datetime.datetime.now()
+#     order_date = now.strftime('%y%m%d')
+#     n = int(order_date)
+#     # order_date[0] = order_date
+#     print(f"Order Prefix: {n}")
+#     print(type(n))
+#     print(n)
+#     order_date = n
 
 
-# def submit_order():
-#     submit = input('\nWould you like to submit this order? y/n: ').lower()
-#     if submit.startswith('n'):
-#         save_order()
-#     else:
-#         generate_order_no()
-#         combine_data_for_export()
-#         user_email = order_data[2]
-#         order_no = SHEET.worksheet('orders').get_values('G:G')
-#         last_entry = len(order_no) - 1
-#         recent_order_no = order_no[last_entry]
-#         # print(type(most_recent_order_no))
-#         print(order_no[last_entry])
-#         print(f'Order submitted. You will recieve an email instructions to {user_email}')
-#         print(f'to arrange payment. Your order number is: {recent_order_no[0]}')
-#         summary_order_data()
+def submit_order():
+    """
+    
+    """
+    submit = input('\nWould you like to submit this order? y/n: ').lower()
+    if submit.startswith('n'):
+        save_order()
+    else:
+        generate_order_no()
+        combine_data_for_export()
+        user_email = order_data[2]
+        recent_order_no = order_data[6]
+        print(f'\nOrder successfully submitted!!\nYou will shortly recieve an email instructions to {user_email}')
+        print(f'to arrange payment.\n\nYour order number is: {recent_order_no}')
 
 
 def save_order():
@@ -333,6 +349,43 @@ def save_order():
     else:
         combine_data_for_export()
         summary_order_data()
+
+
+def email_print_update_startover():
+    print('\nWhat would you like to do next?')
+    print('\nSelect 1. : Email this order')
+    print('Select 2. : Print this order')
+    print('Select 3. : Start a new N3D insole order')
+    print('Select 4. : Retrieve an exsisting N3D order')
+    print('Select 5. : Exit this n3orthotics session\n')
+
+    startover = input('Your Selection: ')
+    order_no = order_data[6]
+    user_email = user_data[2]
+    for i in startover:
+        if i == '1':
+            print(f'Emailing order number : {order_no} to {user_email}...\n')
+            return True
+            # main()
+        elif i == '2':
+            print(f'Printing order number : {order_no}...\n')
+            # get_user_data()
+            # instruct_user_data()
+            # get_user_data()
+        elif i == '3':
+            print('Start a new N3D insole order...\n')
+            yes_no_user()
+            get_order_data()
+        elif i == '4':
+            print('Taking you to retrieve_order function...\n')
+        elif i == '5':
+            print('Exiting this n3orthotics session...\n')
+            clear_screen()
+            start()
+            select_option()
+        else:
+            print(f'The number you have provided "{startover}" is not available.\nPlease select again\n')
+            email_print_update_startover()
 
 
 def main():

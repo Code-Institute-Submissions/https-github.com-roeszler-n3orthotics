@@ -211,6 +211,18 @@ def get_order_data():
     # get_width_data()
 
 
+def get_size_data():
+    size_eu = float(input('EU Shoe Size (0.5 increments between 19 and 50): '))
+    size_divisble = size_eu % 0.5
+    # if size_eu >= 19 & size_eu <= 50:
+    if size_divisble != 0:
+        print(f'Incorrect information provided for european shoe sizing: {size_eu}\n')
+        get_size_data()
+    else:
+        order_data[0] = size_eu
+        print(order_data)
+
+
 def get_height_data():
     """
     

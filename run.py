@@ -107,18 +107,22 @@ def validate_user_email(values):
     Raises ValueError if strings cannot be converted
     """
     values_string = f'{values.split(",")}'
-    print(f'The user_data you provided converted into a list of strings is:\n{values_string}\n')
+    # print(f'The user_data you provided converted into a list of strings is:\n{values_string}\n')
 
     try:
-        if (re.fullmatch(REGEX, values)):
-            print('valid email')
+        if (re.fullmatch(REGEX_EMAIL, values)):
+            print('Email is valid...')
+            yes_no_user()
         else:
-            # print('invalid email')
             raise ValueError(
                 f'The email you have provided "{values}" does not seem\nto be in a regular format'
             )
     except ValueError as e:
         print(f'Invalid data: {e}. Please check the entry and try again.\n')
+        user_email = remove(input('Your Email: ').lower())
+        user_data[2] = user_email
+        print(user_data)
+        validate_user_email(values)
 
 
 def remove(string):

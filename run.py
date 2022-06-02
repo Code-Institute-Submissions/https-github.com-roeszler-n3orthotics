@@ -285,6 +285,31 @@ def get_latest_row_entry():
 #            print ("Please respond with 'yes' or 'no'")
 
 
+def yes_no_user():
+    """
+    Prompt for user to confirm or input correct user_data
+    """
+    summary_user_data()
+    # print(user_data[0])
+    # print(user_data)
+    correct = input('\nIs this information correct? y/n: ').lower()
+    if correct.startswith('y'):
+        clear_screen()
+        f_name = user_data[0]
+        print(
+            f'Thanks {f_name}. Now lets customise your N3 Othoses order...'
+            )
+        get_order_data()
+        generate_order_no()
+        combine_data_for_export()
+        summary_order_data()
+        submit_order()
+        # return True
+    else:
+        clear_screen()
+        get_user_data()
+
+
 def get_order_data():
     """
     Collection of User input used to order N3D Orthosis.

@@ -815,18 +815,21 @@ def change_feature_of_order():
 
 def update_status():
     """
-    
+    Generates a list of user options to append details of an exsisting order ot
+    create new order details and/or navigate through the system
     """
     order_no = order_data[3]
-    f_name = user_data[0]
+    # f_name = user_data[0]
     # print(export_data)
-    print(f'Hi {f_name}. What would you like to do with order no.{order_no} ?')
+
+    print(f'What would you like to do with order no. {order_no} ?')
     print('\nSelect 1. : Re-Print this order again (no changes)')
     print('Select 2. : Change the features')
-    print('Select 3. : Start a new order')
+    print('Select 3. : Place a new N3D insole order')
     print('Select 4. : Cancel order')
     print('Select 5. : Search different order')
     print('Select 6. : Take me home\n')
+
     startover = input('Your Selection: ')
     for i in startover:
         if i == '1':
@@ -837,8 +840,8 @@ def update_status():
             # email_print_update_startover()
         elif i == '2':
             clear_screen()
-            print(f'Order No.{order_no}\n')
-            validate_change_feat()
+            print(f'Order No. {order_no}\n')
+            validate_change_feature_of_order()
             # email_print_update_startover()
         elif i == '3':
             clear_screen()
@@ -847,8 +850,9 @@ def update_status():
             # get_order_data()
         elif i == '4':
             clear_screen()
-            print(f'Checking the current status of order no.{order_no}...')
+            print(f'Checking the current status of order no. {order_no} ...')
             update_to_canceled_status()
+
         elif i == '5':
             clear_screen()
             display_order()
@@ -857,16 +861,16 @@ def update_status():
             clear_screen()
             main()
         else:
-            print(f'The number you have provided "{startover}" is not available.\nPlease select again\n')
+            print(
+                f'The number you have provided "{startover}" is not available.'
+            )
+            print('Please select again\n')
             email_print_update_startover()
-    n = generate_UTC_time()
-    update_order[1] = n
-    print(update_order)
-    print(export_data)
-    n = generate_UTC_time()
-    update_order[1] = n
-    print(update_order)
-    print(export_data)
+
+    iso_format_timezone = generate_utc_time()
+    update_order[1] = iso_format_timezone
+    # print(update_order)
+    # print(export_data)
 
 
 def cancel_confirm():

@@ -257,7 +257,7 @@ def get_size_data():
     """
     while True:
         try:
-            size_eu = float(remove(input('\nWhat EU Shoe Size would you like to match with?\n(sized in 0.5 increments between 19 and 50): ')))
+            size_eu = float(remove(input('\nWhat EU Shoe Size would you like to fit into?\n(sized in 0.5 increments between 19 and 50): ')))
             size_divisble = size_eu % 0.5
 
             if size_eu >= 19 and size_eu <= 50:
@@ -605,12 +605,21 @@ def update_status():
     update_order[1] = n
     print(update_order)
     print(export_data)
-
-
     n = generate_UTC_time()
     update_order[1] = n
     print(update_order)
     print(export_data)
+
+
+def cancel_confirm():
+    """
+    
+    """
+    confirm = input('Are you sure you wish to cancel this order? y/n : ')
+    if confirm.startswith('y'):
+        return True
+    elif confirm.startswith('n'):
+        main()
 
 
 def submit_order():

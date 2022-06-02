@@ -942,11 +942,11 @@ def update_to_canceled_status():
 
 def submit_row_data():
     """
-    Replaces the exsisting row data in the worksheet with updated data and 
+    Replaces the exsisting row data in the worksheet with updated data and
     records the date of the order update
     """
     row = order_data[7]
-    order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
+    # order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
     order_worksheet = SHEET.worksheet('orders')
 
     print(f'Accessing your order on row number : {row}')
@@ -955,13 +955,13 @@ def submit_row_data():
     # print(f'order_data :\n{order_data}')
     # print(f'user_data :\n{user_data}')
 
-    n = generate_UTC_time()
-    export_data[9] = n
+    iso_format_timezone = generate_utc_time()
+    export_data[9] = iso_format_timezone
     export_data[8] = 'UPDATED ORDER'
     order_worksheet.update(f'A{row}', export_data[0])
     order_worksheet.update(f'B{row}', export_data[1])
     order_worksheet.update(f'C{row}', export_data[2])
-    order_worksheet.update(f'D{row}', int(export_data[3]))
+    order_worksheet.update(f'D{row}', float(export_data[3]))
     order_worksheet.update(f'E{row}', export_data[4])
     order_worksheet.update(f'F{row}', export_data[5])
     order_worksheet.update(f'G{row}', int(export_data[6]))
@@ -969,7 +969,12 @@ def submit_row_data():
     order_worksheet.update(f'I{row}', export_data[8])
     order_worksheet.update(f'J{row}', export_data[9])
 
-    print(f'\nOrder No.{export_data[6]} successfully updated!\nThanks for using the N(3)Orthotics order submission app.\n\nYou should shortly recieve an email to {export_data[2]} confirming the changes')
+    print(f'\nOrder No. {export_data[6]} successfully updated!')
+    print('Thanks for using the N(3)Orthotics order submission app.\n')
+    # print(
+    #     '\nYou should shortly recieve an email confirming these changes to:'
+    #     f'\n{export_data[2]}\n'
+    #     )
     update_status()
 
 

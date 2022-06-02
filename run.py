@@ -514,6 +514,16 @@ def update_date_ordered():
     # print(order_data)
 
 
+def generate_row_no():
+    """
+    Retrieves current row data length and extends it by 1 value
+    """
+    row_data = SHEET.worksheet('orders').get_values('K:K')
+    new_row_no = len(row_data) + 1
+    # order_data[7] = new_row_no
+    export_data.append(new_row_no)
+    # return new_row_no
+
 
 
 def input_order_no():

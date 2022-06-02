@@ -560,22 +560,29 @@ def input_order_no():
     Checks the user input order number is only numerical and correct length
     """
     print('Please enter your order number below.')
-    print('This information should be in a valid syntax, with no spaces. For example:\n')
-    print('Example Number: 2205190003\n')
+    print(
+        'This information should be in a valid syntax, with no spaces.'
+        'For example:\n'
+        )
+    print('Example order_no format: 2205190001\n')
     while True:
         try:
-            order_no = int(remove(input('Order Number: ')))
+            order_no = int(remove_blank_space(input('You Order Number: ')))
             order_no_string = str(order_no)
             if len(order_no_string) != 10:
                 raise ValueError(
-                f'`Our order numbers require 10 digits.\nUnfortunatley {order_no} has {len(order_no_string)} digits.'
+                    'Our order numbers require 10 digits.'
+                    f'\nUnfortunatley {order_no} has {len(order_no_string)}'
+                    ' digits.'
                 )
-        except ValueError as e:
-            print(f'Invalid data : {e}\nPlease check your records and try again below;\n')
+        except ValueError as error:
+            print(
+                f'Invalid data : {error}'
+                '\nPlease check your records and try again below;\n')
             # return False
             continue
-        print(len(order_no_string))
-        print(order_no)
+        # print(len(order_no_string))
+        # print(order_no)
         # return True
         return order_no
 

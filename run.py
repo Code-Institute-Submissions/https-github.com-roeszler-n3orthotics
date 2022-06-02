@@ -1019,19 +1019,22 @@ def submit_order():
         email_print_update_startover()
 
 
-def update_sales_worksheet(data):
+def update_order_worksheet(data):
     """
     Update sales google worksheet, add new row with the list data provided
     """
     print('Contacting the mothership...')
-    order_worksheet = SHEET.worksheet('orders') # accessing our sales_worksheet from our google sheet
-    order_worksheet.append_row(data) # adds a new row in the google worksheet selected
-    print('Success!! The Northo-bots have made contact!')
+# accessing our sales_worksheet from our google sheet
+    order_worksheet = SHEET.worksheet('orders')
+# adds a new row in the google worksheet selected
+    order_worksheet.append_row(data)
+    print('Information received...')
 
 
 def save_order():
     """
-    
+    User descision to save order as pending within gsheets or
+    clear all local data and return to main screen
     """
     save = input('\nWould you like to save this order? y/n: ').lower()
     if save.startswith('n'):
@@ -1041,9 +1044,21 @@ def save_order():
         clear_screen()
         main()
     else:
-        combine_data_for_export()
-        summary_order_data()
+        # update_date_ordered()
+        export_data[7] = ''
+        # generate_order_no()
+        update_to_pending_status()
+        # combine_data_for_export()
+        # print(export_data)
+        # summary_order_data()
+        # display_order()
         email_print_update_startover()
+
+
+# def export_to_printer():
+#     os.startfile("TestFile.txt", "print")
+#     import platform
+#     print(platform.platform())
 
 
 def email_print_update_startover():

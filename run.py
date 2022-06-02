@@ -378,6 +378,17 @@ def generate_UTC_time():
     return n
 
 
+def update_date_ordered():
+    """
+    Updates the order_date filed within order_data list
+    """
+    n = generate_UTC_time()
+    order_data[4] = n
+    order_data[5] = 'NEW ORDER'
+    print(order_data)
+
+
+
 def submit_order():
     """
     

@@ -525,6 +525,35 @@ def generate_row_no():
     # return new_row_no
 
 
+def update_to_pending_status():
+    """
+    Updates status to pending when user saves order
+    """
+    time_zone = generate_utc_time()
+    export_data[9] = time_zone
+    export_data[8] = 'PENDING'
+    export_data[7] = ''
+    new_order_no = generate_order_no()
+    export_data[6] = new_order_no
+    generate_row_no()
+    # export_data[10] = order_data[7]
+    # export_data[10] == new_order_no
+# accessing our sales_worksheet from our google sheet
+    order_worksheet = SHEET.worksheet('orders')
+# adds a new row in the google worksheet selected
+    order_worksheet.append_row(export_data)
+    # print(export_data)
+    clear_screen()
+    # print(export_data)
+    # print(order_data[7])
+    # print(generate_order_no())
+    print('Data successfully saved as PENDING.')
+    # print(f"An email with it's details to {export_data[2]}")
+    print(
+        f'\nPlease carefully record order no : {export_data[6]}'
+        '\nYou will need it to recall this item into the future.'
+        )
+
 
 def input_order_no():
     """

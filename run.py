@@ -246,15 +246,15 @@ def get_height_data():
     """
     Height user input converted into ['Low', 'Med', 'High'] for order_data
     """
-    height = remove(input('Arch Height (L: Low Arch / M: Med Arch / H: High Arch): ').lower())
+    height = remove(input('\nWhat level of support under the inside arch would you like?\n(L: Low Support / M: Medium Support / H: High Support): ').lower())
     if height.startswith('l'):
         order_data[1] = 'Low'
     elif height.startswith('m'):
-        order_data[1] = 'Med'
+        order_data[1] = 'Medium'
     elif height.startswith('h'):
         order_data[1] = 'High'
     else:
-        print(f'Incorrect information provided for arch height: {height}\n')
+        print(f'\nIncorrect information provided for arch height: {height}\n')
         get_height_data()
     print(order_data)
 
@@ -263,7 +263,7 @@ def get_width_data():
     """
     Width user input converted into ['Narrow', 'Standard', 'Wide'] for order_data
     """
-    width = remove(input('Width (N: Narrow / S: Standard / W: Wide): ').lower())
+    width = remove(input('\nWidth of insole to fit the foot &/or shoe\n(N: Narrow / S: Standard / W: Wide): ').lower())
     if width.startswith('n'):
         order_data[2] = 'Narrow'
     elif width.startswith('s'):
@@ -271,8 +271,14 @@ def get_width_data():
     elif width.startswith('w'):
         order_data[2] = 'Wide'
     else:
-        print(f'Incorrect information provided for device width: {width}\n')
+        print(f'\nIncorrect information provided for insole width: {width}\n')
         get_width_data()
+    print(order_data)
+
+
+def combine_data_for_export():
+    for i in user_data:
+        order_data.insert(0,i)
     print(order_data)
 
 

@@ -293,24 +293,37 @@ def clear_screen():
         _ = os.system('cls')
     # print("Screen Cleared")
 
-def submit_order():
-    submit = input('\nWould you like to submit this order? y/n: ').lower()
-    if submit.startswith('n'):
-        save = input('\nWould you like to save this order? y/n: ').lower()
-        if save.startswith('n'):
-            user_data.clear()
-            order_data.clear()
-            main()
-        else:
-            combine_data_for_export()
-            summary_order_data()
+# def submit_order():
+#     submit = input('\nWould you like to submit this order? y/n: ').lower()
+#     if submit.startswith('n'):
+#         save = input('\nWould you like to save this order? y/n: ').lower()
+#         if save.startswith('n'):
+#             user_data.clear()
+#             order_data.clear()
+#             main()
+#         else:
+#             combine_data_for_export()
+#             summary_order_data()
+#     else:
+#         combine_data_for_export()
+#         user_email = 
+#         order_no = 
+#         print(f'Order submitted. You will recieve an email instructions to {user_email}')
+#         print(f'to arrange payment. Your order number is: {order_no}')
+#         summary_order_data()
+
+
+def save_order():
+    save = input('\nWould you like to save this order? y/n: ').lower()
+    if save.startswith('n'):
+        user_data.clear()
+        order_data.clear()
+        clear_screen()
+        main()
     else:
         combine_data_for_export()
-        user_email = 
-        order_no = 
-        print(f'Order submitted. You will recieve an email instructions to {user_email}')
-        print(f'to arrange payment. Your order number is: {order_no}')
         summary_order_data()
+
 
 def main():
     """

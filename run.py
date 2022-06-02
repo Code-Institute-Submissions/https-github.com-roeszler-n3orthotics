@@ -15,6 +15,6 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('n3orthotics')
 
-sales = SHEET.worksheet('t-sales')
+sales = SHEET.worksheet('orders')
 data = sales.get_all_values()
 print(data)

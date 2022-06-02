@@ -207,8 +207,10 @@ def yes_no_user():
     summary_user_data()
     correct = input('\nIs this information correct? y/n: ').lower()
     if correct.startswith('y'):
-        print('Updating worksheet and proceeding to order_data...\n')
-        return True
+        f_name = user_data[0]
+        print(f'\nThanks {f_name}. Now lets customise your N3 Othoses order...')
+        # return True
+        get_order_data()
     else:
         get_user_data()
 

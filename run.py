@@ -20,6 +20,8 @@ REGEX_EMAIL = r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9
 
 user_data = ['f_name', 'l_name', 'user_email']
 order_data = ['size_eu', 'height', 'width']
+export_data = []
+
 
 # sales = SHEET.worksheet('orders')
 # data = sales.get_all_values()
@@ -97,10 +99,23 @@ def summary_user_data():
     l_name = user_data[1]
     user_email = user_data[2]
 
-    print(f'\nThanks {f_name}. Your user details are as follows:')
-    print('------------')
-    print(f'Full Name: {f_name} {l_name}\nEmail: {user_email}')
-    print('------------')
+    # print(f'\nThanks {f_name}. Your user details are as follows:')
+    # print('------------')
+    print(f'\nFull Name : {f_name} {l_name}\nEmail : {user_email}')
+    # print('------------')
+
+
+def summary_order_data():
+    f_name = user_data[0]
+    size_eu = order_data[0]
+    height = order_data[1]
+    width = order_data[2]
+
+    print(f'\nThanks {f_name}. Your order details are as follows:')
+    # print('------------')
+    summary_user_data()
+    print(f'Shoe Size : EU {size_eu}\nArch Height : {height}\nInsole Width : {width}\n')
+    # print('------------')
 
 
 def validate_user_f_name(values):
@@ -227,7 +242,7 @@ def get_size_data():
 
 def get_height_data():
     """
-    
+    Height user input converted into ['Low', 'Med', 'High'] for order_data
     """
     height = remove(input('Arch Height (L: Low Arch / M: Med Arch / H: High Arch): ').lower())
     if height.startswith('l'):
@@ -244,7 +259,7 @@ def get_height_data():
 
 def get_width_data():
     """
-    
+    Width user input converted into ['Narrow', 'Standard', 'Wide'] for order_data
     """
     width = remove(input('Width (N: Narrow / S: Standard / W: Wide): ').lower())
     if width.startswith('n'):

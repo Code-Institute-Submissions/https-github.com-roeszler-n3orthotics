@@ -561,14 +561,14 @@ def update_status():
     """
     order_no = order_data[3]
     f_name = user_data[0]
-
-    print(f'\nHi {f_name}. What would you like to do with order no {order_no}?')
+    # print(export_data)
+    print(f'Hi {f_name}. What would you like to do with order no.{order_no} ?')
     print('\nSelect 1. : Re-Print this order again (no changes)')
     print('Select 2. : Change the features')
     print('Select 3. : Start a new order')
     print('Select 4. : Cancel order')
-    print('Select 5. : Return to Previous Screen\n')
-
+    print('Select 5. : Search different order')
+    print('Select 6. : Take me home\n')
     startover = input('Your Selection: ')
     for i in startover:
         if i == '1':
@@ -579,7 +579,8 @@ def update_status():
             # email_print_update_startover()
         elif i == '2':
             clear_screen()
-            print(f'Change features of order : {order_no}...\n')
+            print(f'Order No.{order_no}\n')
+            validate_change_feat()
             # email_print_update_startover()
         elif i == '3':
             clear_screen()
@@ -588,14 +589,22 @@ def update_status():
             # get_order_data()
         elif i == '4':
             clear_screen()
-            print(f'Cancelling order {order_no}...\n')
-
+            print(f'Checking the current status of order no.{order_no}...')
+            update_to_canceled_status()
         elif i == '5':
             clear_screen()
-            print('Returning you to previous screen...\n')
+            display_order()
+            # order_no = input(f'Your order no. : {order_no}')
+        elif i == '6':
+            clear_screen()
+            main()
         else:
             print(f'The number you have provided "{startover}" is not available.\nPlease select again\n')
             email_print_update_startover()
+    n = generate_UTC_time()
+    update_order[1] = n
+    print(update_order)
+    print(export_data)
 
 
     n = generate_UTC_time()
@@ -701,12 +710,11 @@ def main():
     instruct_user_data()
     get_user_data()
     summary_order_data()
-    # generate_order_no()
     combine_data_for_export()
     submit_order()
 
+# main()
 
-main()
 
 # get_latest_row_entry()
 # validate_user_email(values='stuart@roeszler.com')
@@ -733,5 +741,10 @@ main()
 # test_email()
 # export_to_printer()
 # update_status()
-# retrieve_order()
-input_order_no()
+# retrieve_order() 
+display_order()
+# input_order_no()
+# update_to_pending_status()
+# update_to_canceled_status()
+# cancel_confirm()
+# validate_change_feat()

@@ -176,15 +176,23 @@ def remove(string):
 
 
 def get_latest_row_entry():
+    """
+    Prints a list to the termainal of the row last updated
+    between colums A to F in the worksheet
+    """
     orders = SHEET.worksheet('orders').get_values('A:F')
-    email = orders[-1]
-    print(email)
+    latest = orders[-1]
+    print(latest)
 
 
 def yes_no_user():
-    correct = input('Is this information correct? y/n: ').lower()
+    """
+    Prompt for user to confirm or input correct user_data
+    """
+    summary_user_data()
+    correct = input('\nIs this information correct? y/n: ').lower()
     if correct.startswith('y'):
-        # print(f'Thanks *** , updating worksheet and proceeding to order_data\n')
+        print('Updating worksheet and proceeding to order_data...\n')
         return True
     else:
         get_user_data()
@@ -196,7 +204,13 @@ def main():
     """
     instruct_user_data()
     user = get_user_data()
+
+
 main()
 
 # get_latest_row_entry()
 # validate_user_data()
+# validate_user_names(values='stuart Roes3ler')
+# yes_no_user()
+# select_option()
+# start()

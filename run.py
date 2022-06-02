@@ -282,6 +282,18 @@ def combine_data_for_export():
     print(order_data)
 
 
+def clear_screen():
+    """
+    Checks if Operating System is Mac and Linux or Windows and 
+    clears the screen
+    """
+    if os.name == 'posix':
+        _ = os.system('clear')
+    else:
+        _ = os.system('cls')
+    # print("Screen Cleared")
+
+
 def main():
     """
     Run all program functions

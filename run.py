@@ -309,6 +309,18 @@ def clear_screen():
     # print("Screen Cleared")
 
 
+def slice_last_order_no():
+    order_no = SHEET.worksheet('orders').get_values('G:G')
+    last_index = len(order_no) - 1
+    last_entry = order_no[last_index]
+    last_entry_int = last_entry[0]
+    x = slice(6)
+    reset_no = int(last_entry_int[x])
+    reset_no_10K = reset_no * 10000
+    # print(type(reset_no))
+    return reset_no_10K
+
+
 def generate_order_no():
     """
     
@@ -319,12 +331,15 @@ def generate_order_no():
     last_entry_int = int(last_entry[0])
     now = datetime.datetime.now()
     order_date = now.strftime('%y%m%d')
-    new_order_no = (int(order_date)*10000) + last_entry_int + 1
+    new_order_no = (int(order_date)*10000) + (last_entry_int - slice_last_order_no() + 1)
+
     order_data[3] = new_order_no
     # print(type(new_order_no))
     # print(new_order_no)
     # print(type(order_data[3]))
     # print(order_data[3])
+    return new_order_no
+
 
 # def generate_date_time():
 #     now = datetime.datetime.now()
@@ -420,12 +435,16 @@ def main():
     submit_order()
 
 
-# main()
-
+main()
+# get_latest_row_entry()
+# validate_user_email(values='stuart@roeszler.com')
+# validate_user_names(values='stuart Roes3ler')
+# yes_no_user()
+# start()
 # select_option()
 # summary_user_data()
-yes_no_user()
-get_order_data()
+# yes_no_user()
+# get_order_data()
 # get_size_data()
 # summary_order_data()
 # submit_order()
@@ -435,3 +454,4 @@ get_order_data()
 # generate_order_no()
 # generate_date_time()
 # instruct_user_data()
+email_print_update_startover()

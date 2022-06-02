@@ -114,26 +114,34 @@ def get_user_data():
 
 
 def summary_user_data():
-    f_name = user_data[0]
-    l_name = user_data[1]
-    user_email = user_data[2]
+    """
+    Produces a readable summary of the current user_data list
+    """
+    # f_name = user_data[0]
+    # l_name = user_data[1]
+    # user_email = user_data[2]
 
     # print(f'\nThanks {f_name}. Your user details are as follows:')
     # print('------------')
-    print(f'\nFull Name : {f_name} {l_name}\nEmail : {user_email}')
+    print(f'Full Name : {user_data[0]} {user_data[1]}\nEmail : {user_data[2]}')
     # print('------------')
 
 
 def summary_order_data():
-    f_name = user_data[0]
+    """
+    Produces a summary of the current order data stored locally
+    """
+    # f_name = user_data[0]
     size_eu = order_data[0]
     height = order_data[1]
     width = order_data[2]
 
-    print(f'\nThanks {f_name}. Your order details are as follows:')
+    print('\nYour order details are as follows:')
     # print('------------')
     summary_user_data()
-    print(f'Shoe Size : EU {size_eu}\nArch Height : {height}\nInsole Width : {width}\n')
+    print(f'Shoe Size : EU {size_eu}')
+    print(f'Arch Height : {height}')
+    print(f'Insole Width : {width}')
     # print('------------')
 
 

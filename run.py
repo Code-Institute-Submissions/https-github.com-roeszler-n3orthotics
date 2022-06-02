@@ -738,28 +738,79 @@ def validate_change_feature_of_order():
         email_print_update_startover()
 
 
-def validate_change_feat():
+def change_feature_of_order():
     """
-    Valudates order is prior to 'SUBMITTED TO PRINT' stage for change_feat function
+    Generates a list to choose which feature of an exsisting order to change
     """
-    row = order_data[7]
-    order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
-    flat_order = flatten_nested_list(order_row)
-
-    print(f'Current order status is: {flat_order[8]}')
-    if flat_order[8] == 'PENDING' or flat_order[8] == 'NEW ORDER' or flat_order[8] == 'CREATED' or flat_order[8] == 'ACCEPTED' or flat_order[8] == 'DESIGNED':
-        print('Order is modifiable.')
-        print('\nYour order details are as follows:\n')
-        print(f'Order No. : {flat_order[6]}\nDate Ordered : {flat_order[7]}\nPlace in production queue : {flat_order[10]}\nCurrent Status : {flat_order[8]}')
-        print('\nDetails you can edit:\n')
-        print(f'1. First Name : {user_data[0]}\n2. Surname : {user_data[1]}\n3. Email : {user_data[2]}')
-        print(f'4. Shoe Size : EU {order_data[0]}\n5. Arch Height : {order_data[1]}\n6. Insole Width : {order_data[2]}\n')
-        print(f'7. Submit the above details\n8. Take me Home\n')
-        change_feat()
-
+    feature_selection = input('Your Selection : ')
+    if feature_selection == '1':
+        clear_screen()
+        f_name = input('New First Name details: ')
+        clear_screen()
+        validate_user_f_name(f_name)
+        f_name = user_data[0]
+        # print(f_name)
+        # export_data[0] = f_name
+        validate_change_feature_of_order()
+    #     print(f'user_data:\n {user_data}')
+    #     print(order_data)
+    #     print(f'order_data:\n {order_data}')
+    #     print(export_data)
+    #     print(f'export_data:\n {export_data}')
+    #     print(flat_order)
+    #     print(f'flat_order:\n {flat_order}')
+    elif feature_selection == '2':
+        clear_screen()
+        l_name = input('New Last Name details: ')
+        clear_screen()
+        validate_user_l_name(l_name)
+        l_name = user_data[1]
+        # print(user_data[1])
+        validate_change_feature_of_order()
+    elif feature_selection == '3':
+        clear_screen()
+        user_email = input('New Email details: ')
+        validate_user_email(user_email)
+        user_email = user_data[2]
+        validate_change_feature_of_order()
+    elif feature_selection == '4':
+        clear_screen()
+        get_size_data()
+        clear_screen()
+        validate_change_feature_of_order()
+    elif feature_selection == '5':
+        clear_screen()
+        get_height_data()
+        clear_screen()
+        validate_change_feature_of_order()
+    elif feature_selection == '6':
+        clear_screen()
+        get_width_data()
+        clear_screen()
+        validate_change_feature_of_order()
+    elif feature_selection == '7':
+        # print('Submit : ')
+        # submit_order()
+        # print(export_data)
+        # print('Create submit_row_data() function')
+        update_date_ordered()
+        combine_data_for_export()
+        submit_row_data()
+    # elif feature_selection == '8':
+    #     clear_screen()
+    #     order_no = order_data[3]
+    #     print(f'Re-printing order number : {order_no}...')
+    #     submit_order()
+    elif feature_selection == '8':
+        combine_data_for_export()
+        main()
     else:
-        print(f'Unfortunately, at the {flat_order[8]} stage, this order is past the point\nwhere modifications can occur without charges.')
-        email_print_update_startover()
+        print(
+            f'The number you have provided "{feature_selection}" is not part'
+            'of this selection.'
+            )
+        print('Please select again\n')
+        validate_change_feature_of_order()
 
 
 def update_status():

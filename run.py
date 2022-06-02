@@ -374,6 +374,16 @@ def submit_order():
         email_print_update_startover()
 
 
+def update_sales_worksheet(data):
+    """
+    Update sales google worksheet, add new row with the list data provided
+    """
+    print('Contacting the mothership...')
+    order_worksheet = SHEET.worksheet('orders') # accessing our sales_worksheet from our google sheet
+    order_worksheet.append_row(data) # adds a new row in the google worksheet selected
+    print('Success!! The Northo-bots have made contact!')
+
+
 def save_order():
     save = input('\nWould you like to save this order? y/n: ').lower()
     if save.startswith('n'):

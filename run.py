@@ -93,23 +93,24 @@ def instruct_user_data():
 def get_user_data():
     """
     User input of first name, last name and email to from a string
-    with fist letter capitalized for names and all lowercase email 
+    with fist letter capitalized for names and all lowercase email
     """
-    f_name = remove(input('Your First Name: ').capitalize())
-    user_data[0] = f_name
-    print(user_data)
-
-    l_name = remove(input('Your Last Name: ').capitalize())
-    user_data[1] = l_name
-    print(user_data)
-
-    user_email = remove(input('Your Email: ').lower())
-    user_data[2] = user_email
-    print(user_data)
-
+    f_name = remove_blank_space(input('Your First Name: ').capitalize())
     validate_user_f_name(f'{f_name}')
+    # user_data[0] = valid_f_name
+    f_name = user_data[0]
+    # print(user_data)
+
+    l_name = remove_blank_space(input('Your Last Name: ').capitalize())
     validate_user_l_name(f'{l_name}')
+    # user_data[1] = l_name
+    l_name = user_data[1]
+    # print(user_data)
+    user_email = remove_blank_space(input('Your Email: ').lower())
     validate_user_email(f'{user_email}')
+    # user_data[2] = user_email
+    user_email = user_data[2]
+    # print(user_data)
 
 
 def summary_user_data():

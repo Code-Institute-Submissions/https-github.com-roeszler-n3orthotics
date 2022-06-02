@@ -201,7 +201,7 @@ def get_latest_row_entry():
     print(latest)
 
 
-def yes_no_user():
+ef yes_no_user():
     """
     Prompt for user to confirm or input correct user_data
     """
@@ -210,8 +210,12 @@ def yes_no_user():
     if correct.startswith('y'):
         f_name = user_data[0]
         print(f'\nThanks {f_name}. Now lets customise your N3 Othoses order...')
-        # return True
         get_order_data()
+        generate_order_no()
+        combine_data_for_export()
+        summary_order_data()
+        submit_order()
+        # return True
     else:
         get_user_data()
 
@@ -238,6 +242,9 @@ def get_size_data():
         else:
             order_data[0] = size_eu
             print(order_data)
+            # generate_order_no()
+            # submit_order()
+            # get_height_data()
     else:
         print(f'\nUnfortunatley {size_eu} is not within the european shoe size range we do.\n')
         get_size_data()
@@ -403,17 +410,16 @@ def main():
 
 # main()
 
-# get_latest_row_entry()
-# validate_user_email(values='stuart@roeszler.com')
-# validate_user_names(values='stuart Roes3ler')
-# yes_no_user()
 # select_option()
-# start()
-# get_order_data()
+# summary_user_data()
+yes_no_user()
+get_order_data()
 # get_size_data()
 # summary_order_data()
 # submit_order()
 # save_order()
 # combine_data_for_export()
 # clear_screen()
-generate_order_no()
+# generate_order_no()
+# generate_date_time()
+# instruct_user_data()

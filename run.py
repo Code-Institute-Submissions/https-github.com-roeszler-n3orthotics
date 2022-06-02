@@ -1,24 +1,26 @@
 """
-Main running file n(3)orthotics order portal
+Contains all modules imported to provide and export live data such as
+operating system, email formats, current Coordinated Universal Timezone
+and google sheets
 """
-import gspread
-from google.oauth2.service_account import Credentials
-import re # regular extensions import for checking syntax of email
 import os
+import re
 import datetime
 from datetime import timezone
+import gspread
+from google.oauth2.service_account import Credentials
 
 SCOPE = [
-    "https://www.googleapis.com/auth/spreadsheets",
-    "https://www.googleapis.com/auth/drive.file",
-    "https://www.googleapis.com/auth/drive"
+    'https://www.googleapis.com/auth/spreadsheets',
+    'https://www.googleapis.com/auth/drive.file',
+    'https://www.googleapis.com/auth/drive'
     ]
 
 CREDS = Credentials.from_service_account_file('creds.json')
 SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('n3orthotics')
-REGEX_EMAIL = r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'
+REGEX = r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'
 
 user_data = ['f_name', 'l_name', 'user_email']
 order_data = [
@@ -28,46 +30,32 @@ update_order = ['order_status', 'order_update']
 export_data = []
 
 
-# sales = SHEET.worksheet('orders')
-# data = sales.get_all_values()
-# print(data)
-
-
 def start():
     """
-    Start screen prompting user to:
-    1. Create a new order, or
-    2. Retrieve an exsisting order with order number
+    Start screen prompting user to Create or Retrieve an existing order
+    using an order number
     """
     print('Welcome to N(3)ORTHOTICS order portal.\n')
     print('Use this app to directly access made-to-order N3D Printed Insoles')
     print('Please visit northotics.com/home for more information\n')
     print('Select 1. : Place a new N3D insole order')
-    print('Select 2. : Retrieve an exsisting N3D order')
+    print('Select 2. : Retrieve an existing N3D order')
     print('Select 3. : Exit Program\n')
-    # select_option()
 
 
 def select_option():
     """
-    Initial user choice to place a new or retieve an exsisting N3D order
+    Initial user choice to place a new or retrieve an existing N3D order
     """
     correct = input('Your Selection: ')
-    for i in correct:
-        if i == '1':
-            # print('Updating worksheet and proceeding to order_data...\n')
-            # order_data.clear()
-            # export_data.clear()
+    for selection in correct:
+        if selection == '1':
             return True
-            # main()
-        elif i == '2':
+        elif selection == '2':
             clear_screen()
-            print('Retieve an esxisting N3D insole order : \n')
+            print('Retrieve an existing N3D insole order : \n')
             display_order()
-            # get_user_data()
-            # instruct_user_data()
-            # get_user_data()
-        elif i == '3':
+        elif selection == '3':
             clear_screen()
             quit()
         else:
@@ -79,15 +67,15 @@ def select_option():
 
 def instruct_user_data():
     """
-    Insruct User on format of first name, last name and email.
+    Instruct User on format of first name, last name and email.
     """
     clear_screen()
     print('Place a N(3)ORTHOTICS.com N3D printed insole order:\n')
     print('Where prompted below, please enter your name and email.')
     print('This information should be in a valid syntax, with no spaces.')
     print('For example:\n')
-    print('First Name: Rob\nLast Name: Bertoe')
-    print('Email: rubbertoes@yourdomain.com\n')
+    print('First Name: Rob\nLast Name: Bertoez')
+    print('Email: rubbertoez@yourdomain.com\n')
 
 
 def get_user_data():
@@ -97,78 +85,47 @@ def get_user_data():
     """
     f_name = remove_blank_space(input('Your First Name: ').capitalize())
     validate_user_f_name(f'{f_name}')
-    # user_data[0] = valid_f_name
     f_name = user_data[0]
-    # print(user_data)
 
     l_name = remove_blank_space(input('Your Last Name: ').capitalize())
     validate_user_l_name(f'{l_name}')
-    # user_data[1] = l_name
     l_name = user_data[1]
-    # print(user_data)
+
     user_email = remove_blank_space(input('Your Email: ').lower())
     validate_user_email(f'{user_email}')
-    # user_data[2] = user_email
     user_email = user_data[2]
-    # print(user_data)
 
 
 def summary_user_data():
     """
     Produces a readable summary of the current user_data list
     """
-    # f_name = user_data[0]
-    # l_name = user_data[1]
-    # user_email = user_data[2]
-
-    # print(f'\nThanks {f_name}. Your user details are as follows:')
-    # print('------------')
     print(f'Full Name : {user_data[0]} {user_data[1]}\nEmail : {user_data[2]}')
-    # print('------------')
 
 
 def summary_order_data():
     """
     Produces a summary of the current order data stored locally
     """
-    # f_name = user_data[0]
     size_eu = order_data[0]
     height = order_data[1]
     width = order_data[2]
-
     print('\nYour order details are as follows:')
-    # print('------------')
     summary_user_data()
     print(f'Shoe Size : EU {size_eu}')
     print(f'Arch Height : {height}')
     print(f'Insole Width : {width}')
-    # print('------------')
 
 
 def validate_user_f_name(values):
     """
     Inside the try, checks all user input syntax.
-    Raises ValueError if strings cannot be converted
-    and prompts to replace data in index [0] of the
-    user_data list = f_name
+    Raises ValueError if strings cannot be converted and prompts to
+    replace data in index [0] of the user_data list = f_name
     """
-    # f_name = (f'{values}')
-    # print(values)
     try:
-        # if (re.fullmatch(REGEX_NAME, values)):
         if values.isalpha():
-            # print('Name is valid...')
-            # f_name = values
             user_data[0] = values.capitalize()
-            # correct_data = values.capitalize()
-            # user_data[0] = correct_data
-            # user_data[0] = values
-            # print(user_data[0])
-            # print(user_data)
-            # user_data[0].update(correct_data)
-            # clear_screen()
-            # print(values)
-            # return True
         else:
             raise ValueError(
                 f'The name you have provided "{values}" does not seem'
@@ -179,29 +136,19 @@ def validate_user_f_name(values):
             f'\nInvalid data: {error}. Please check the entry and try again.\n'
             )
         f_name = remove_blank_space(input('Your First Name : ').capitalize())
-        # print(user_data[0])
-        # print(user_data)
         validate_user_f_name(f_name)
         user_data[0] = f_name
-    # user_data[0] = values
-        # print(user_data)
-    # else:
-    #     f_name = (f'{values}')
-    #     user_data[0] = f_name
 
 
 def validate_user_l_name(values):
     """
     Inside the try, checks all user input syntax.
-    Raises ValueError if strings cannot be converted
-    and prompts to replace data in index [1] of the
-    user_data list = l_name
+    Raises ValueError if strings cannot be converted and prompts to
+    replace data in index [1] of the user_data list = l_name
     """
     try:
-        # if (re.fullmatch(REGEX_NAME, values)):
         if values.isalpha():
             user_data[1] = values.capitalize()
-            # print(user_data[1])
         else:
             raise ValueError(
                 f'The name you have provided "{values}" does not seem'
@@ -212,28 +159,20 @@ def validate_user_l_name(values):
             f'\nInvalid data: {error}. Please check the entry and try again.\n'
             )
         l_name = remove_blank_space(input('Your Last Name : ').capitalize())
-        # print(user_data[1])
         validate_user_l_name(l_name)
         user_data[1] = l_name
-        # print(user_data)
 
 
 def validate_user_email(values):
     """
     Inside the try, checks all user email input syntax.
-    Raises ValueError if strings cannot be converted
-    and prompts to replace data in index [2] of the
-    user_data list = user_email
+    Raises ValueError if strings cannot be converted and prompts to
+    replace data in index [2] of the user_data list = user_email
     """
-    # values_string = f'{values.split(",")}'
-    # print('The user_data you provided converted into a list of strings is:')
-    # print(f'\n{values_string}\n')
     try:
         if re.fullmatch(REGEX, values):
             print('Email is valid...')
             user_data[2] = values.lower()
-# removed this for the change email option 3. in update_exsisting order f
-            # yes_no_user()
             clear_screen()
         else:
             raise ValueError(
@@ -246,12 +185,10 @@ def validate_user_email(values):
             )
         user_email = remove_blank_space(input('Your Email: ').lower())
         validate_user_email(user_email)
-        # user_data[2].update(user_email)
         user_data[2] = user_email
-        # print(user_data)
 
 
-def remove(string):
+def remove_blank_space(string):
     """
     Removes all spaces in string inputs
     """
@@ -260,29 +197,12 @@ def remove(string):
 
 def get_latest_row_entry():
     """
-    Prints a list to the termainal of the row last updated
-    between colums A to F in the worksheet
+    Prints a list to the terminal of the row last updated
+    between columns A to F in the worksheet
     """
-    orders = SHEET.worksheet('orders').get_values('A:F')
+    orders = SHEET.worksheet('orders').get_values('A:G')
     latest = orders[-1]
     print(latest)
-
-
-# def yes_no(answer):
-#     """
-#     Function for a Yes/No result based on the answer provided as an arguement
-#     """
-#     response = input('\nIs this information correct? y/n: ').lower()
-#     # response = raw_input(answer).lower()
-
-#     while True:
-#         # response = raw_input(answer).lower()
-#         if response.startswith('y'):
-#            return True
-#         elif response.startswith('n'):
-#            return False
-#         else:
-#            print ("Please respond with 'yes' or 'no'")
 
 
 def yes_no_user():
@@ -290,21 +210,18 @@ def yes_no_user():
     Prompt for user to confirm or input correct user_data
     """
     summary_user_data()
-    # print(user_data[0])
-    # print(user_data)
     correct = input('\nIs this information correct? y/n: ').lower()
     if correct.startswith('y'):
         clear_screen()
         f_name = user_data[0]
         print(
-            f'Thanks {f_name}. Now lets customise your N3 Othoses order...'
+            f'Thanks {f_name}. Now lets customise your N3 Orthoses order...'
             )
         get_order_data()
         generate_order_no()
         combine_data_for_export()
         summary_order_data()
         submit_order()
-        # return True
     else:
         clear_screen()
         get_user_data()
@@ -336,7 +253,7 @@ def get_size_data():
             if size_eu >= 19 and size_eu <= 50:
                 if size_divisble != 0:
                     print(
-                        '\nIncorrect information provided for european'
+                        '\nIncorrect information provided for European'
                         f'shoe sizing: {size_eu}'
                         )
                     get_size_data()
@@ -345,15 +262,13 @@ def get_size_data():
                     return size_eu
             else:
                 print(
-                    f'\nUnfortunatley {size_eu} is not within the european'
+                    f'\nUnfortunatley {size_eu} is not within the European'
                     'shoe size range we do.'
                     )
                 get_size_data()
         except ValueError as error:
             print(f'Invalid data : {error}, please try again.\n')
-            # return False
             continue
-        # return True
 
 
 def get_height_data():
@@ -374,7 +289,6 @@ def get_height_data():
     else:
         print(f'\nIncorrect information provided for arch height: {height}')
         get_height_data()
-    # print(order_data)
 
 
 def get_width_data():
@@ -388,20 +302,13 @@ def get_width_data():
         ).lower())
     if width.startswith('n'):
         order_data[2] = 'Narrow'
-        # generate_order_no()
-        # submit_order()
     elif width.startswith('s'):
         order_data[2] = 'Standard'
-        # generate_order_no()
-        # submit_order()
     elif width.startswith('w'):
         order_data[2] = 'Wide'
-        # generate_order_no()
-        # submit_order()
     else:
         print(f'\nIncorrect information provided for insole width: {width}')
         get_width_data()
-    # print(order_data)
 
 
 def combine_data_for_export():
@@ -411,27 +318,24 @@ def combine_data_for_export():
     """
     clear_screen()
     export_data.clear()
-    for i in user_data:
-        export_data.append(i)
-        # export_data.update(i)
-    for i in order_data:
-        export_data.append(i)
-        # export_data.update(i)
+    for value in user_data:
+        export_data.append(value)
+    for value in order_data:
+        export_data.append(value)
     export_data.pop()
-    # print(export_data)
     return export_data
 
 
 def clear_screen():
     """
-    Checks if Operating System is Mac and Linux or Windows and 
-    clears the screen
+    Checks if Operating System is Mac and Linux or Windows and
+    clears the screen. Sourced from:
+    https://codecap.org/clear-screen-in-python/
     """
     if os.name == 'posix':
         _ = os.system('clear')
     else:
         _ = os.system('cls')
-    # print("Screen Cleared")
 
 
 def slice_last_order_no():
@@ -446,13 +350,12 @@ def slice_last_order_no():
     slice_last_digit = slice(6)
     reset_no = int(last_entry_int[slice_last_digit])
     reset_no_to_ten_thousand = reset_no * 10000
-    # print(type(reset_no))
     return reset_no_to_ten_thousand
 
 
 def generate_order_no():
     """
-    Generates an order number with todays date + increment from previoius
+    Generates an order number with todays date + increment from previous
     order entry in worksheet
     """
     order_no = SHEET.worksheet('orders').get_values('G:G')
@@ -464,43 +367,14 @@ def generate_order_no():
     new_order_no = (
         int(order_date)*10000) + (last_entry_int - slice_last_order_no() + 1)
     order_data[3] = new_order_no
-    # print(new_order_no)
     return new_order_no
-
-
-# def generate_date_time():
-#     now = datetime.datetime.now()
-#     order_date = now.strftime('%y%m%d')
-#     n = int(order_date)
-#     # order_date[0] = order_date
-#     print(f"Order Prefix: {n}")
-#     print(type(n))
-#     print(n)
-#     order_date = n
 
 
 def generate_utc_time():
     """
-    Creates Central European Standard Time (CEST) version of date and time
-    in iso
+    Creates Universal Coordinated Time (UTC) ISO version of date and time
     """
     iso_utc_now = datetime.datetime.now(timezone.utc).isoformat()
-    # CEST = pytz.timezone('Europe/Stockholm')
-    # UTC = pytz.timezone('Etc/GMT+0')
-    # print('{} CEST'.format(utc_now.astimezone(CEST).isoformat()))
-    # print('{} UTC'.format(utc_now.astimezone().isoformat()))
-    # print(
-    #     'the supported timezones by the pytz module:', pytz.all_timezones, '
-    #     '\n')
-    # n = '{}'.format(utc_now.astimezone(CEST).isoformat())
-
-    # iso_format_timezone = '{}'.format(utc_now.astimezone(UTC).isoformat())
-    # iso_format_timezone = datetime.now(timezone.utc).isoformat()
-
-    # print(utc_now)
-    # print(iso_format_timezone)
-    # print(export_data)
-    # return iso_format_timezone
     return iso_utc_now
 
 
@@ -511,7 +385,6 @@ def update_date_ordered():
     time_zone = generate_utc_time()
     order_data[4] = time_zone
     order_data[5] = 'NEW ORDER'
-    # print(order_data)
 
 
 def generate_row_no():
@@ -520,9 +393,7 @@ def generate_row_no():
     """
     row_data = SHEET.worksheet('orders').get_values('K:K')
     new_row_no = len(row_data) + 1
-    # order_data[7] = new_row_no
     export_data.append(new_row_no)
-    # return new_row_no
 
 
 def update_to_pending_status():
@@ -536,19 +407,10 @@ def update_to_pending_status():
     new_order_no = generate_order_no()
     export_data[6] = new_order_no
     generate_row_no()
-    # export_data[10] = order_data[7]
-    # export_data[10] == new_order_no
-# accessing our sales_worksheet from our google sheet
     order_worksheet = SHEET.worksheet('orders')
-# adds a new row in the google worksheet selected
     order_worksheet.append_row(export_data)
-    # print(export_data)
     clear_screen()
-    # print(export_data)
-    # print(order_data[7])
-    # print(generate_order_no())
     print('Data successfully saved as PENDING.')
-    # print(f"An email with it's details to {export_data[2]}")
     print(
         f'\nPlease carefully record order no : {export_data[6]}'
         '\nYou will need it to recall this item into the future.'
@@ -579,15 +441,10 @@ def input_order_no():
             print(
                 f'Invalid data : {error}'
                 '\nPlease check your records and try again below;\n')
-            # return False
             continue
-        # print(len(order_no_string))
-        # print(order_no)
-        # return True
         return order_no
 
 
-# Sourced from https://www.pythonpool.com/flatten-list-python/
 def flatten_nested_list(input_list):
     """
     Flattens a nested list into a list
@@ -610,50 +467,19 @@ def retrieve_order():
     order_nos_import = SHEET.worksheet('orders').get_values('G:G')
     order_nos = flatten_nested_list(order_nos_import)
     order_match = [
-        i for i in range(len(order_nos)) if order_nos[i] == search_input
+        index_no for index_no in range(len(order_nos))
+        if order_nos[index_no] == search_input
         ]
     if order_match == []:
         print(f'Order number {search_input} not found?!\n')
         retrieve_order()
     else:
         row_location = [
-            i for i, order_no in enumerate(order_nos, 1)
+            index_no for index_no, order_no in enumerate(order_nos, 1)
             if order_no == search_input
             ]
         search_match_row = row_location[0]
-        # print(f'\nOrder found in database row no. {search_match_row}')
         return search_match_row
-
-
-# def test():
-#     """
-#     Searches worksheet coloum 'order_no' for a match to user input and
-#     returns row information to local user_data, oder_data and export_data lists
-#     """
-#     search_input = str(input_order_no())
-#     order_nos_import = SHEET.worksheet('orders').get_values('G:G')
-#     order_nos = flatten_nested_list(order_nos_import)
-#     order_match = [
-#         i for i in range(len(order_nos)) if order_nos[i] == search_input
-#         ]
-#     if order_match == []:
-#         print(f'Order number {search_input} not found?!\n')
-#         retrieve_order()
-#     else:
-#         row_location = [i for i, order_no in enumerate(order_nos, 1) if order_no == search_input]
-#         search_match_row = row_location[0]
-#         print(search_match_row)
-#         print(type(search_match_row))
-#         print(f'\nOrder found in database row no. {search_match_row}')
-#         return search_match_row
-
-#         # for i in range(len(order_nos)):
-#         #     if search_input == order_nos[i]:
-#         #         search_match_row = i+1
-#         #         print(search_match_row)
-#         #         print(type(search_match_row))
-#         #         print(f'\nOrder found in database row no. {search_match_row}')
-#         #         return search_match_row
 
 
 def display_order():
@@ -665,7 +491,6 @@ def display_order():
     row = int(retrieve_order())
     order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
     flat_order = flatten_nested_list(order_row)
-    # converts back to an integer
     size_eu = flat_order[3]
     flat_order[3] = float(size_eu)
     order_no = flat_order[6]
@@ -694,11 +519,10 @@ def display_order():
 
 def validate_change_feature_of_order():
     """
-    Valudates order is prior to 'SUBMITTED TO PRINT' stage for
+    Validates order is prior to 'SUBMITTED TO PRINT' stage for
     change_feature_of_order function
     """
     row = order_data[7]
-    # row = export_data[10]
     order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
     flat_order = flatten_nested_list(order_row)
     print(f'Current order status is: {flat_order[8]}')
@@ -726,21 +550,20 @@ def validate_change_feature_of_order():
             )
         print(
             '7. Submit the above details'
-            # '\n8. Re-Print without changes'
             '\n8. Take me Home\n'
             )
         change_feature_of_order()
     else:
         print(
             f'\nAt the {flat_order[8]} stage, this order is beyond the point'
-            'in production\nwhere modifications can occur.'
+            ' in production\nwhere modifications can occur.'
             )
         email_print_update_startover()
 
 
 def change_feature_of_order():
     """
-    Generates a list to choose which feature of an exsisting order to change
+    Generates a list to choose which feature of an existing order to change
     """
     feature_selection = input('Your Selection : ')
     if feature_selection == '1':
@@ -749,23 +572,13 @@ def change_feature_of_order():
         clear_screen()
         validate_user_f_name(f_name)
         f_name = user_data[0]
-        # print(f_name)
-        # export_data[0] = f_name
         validate_change_feature_of_order()
-    #     print(f'user_data:\n {user_data}')
-    #     print(order_data)
-    #     print(f'order_data:\n {order_data}')
-    #     print(export_data)
-    #     print(f'export_data:\n {export_data}')
-    #     print(flat_order)
-    #     print(f'flat_order:\n {flat_order}')
     elif feature_selection == '2':
         clear_screen()
         l_name = input('New Last Name details: ')
         clear_screen()
         validate_user_l_name(l_name)
         l_name = user_data[1]
-        # print(user_data[1])
         validate_change_feature_of_order()
     elif feature_selection == '3':
         clear_screen()
@@ -789,18 +602,9 @@ def change_feature_of_order():
         clear_screen()
         validate_change_feature_of_order()
     elif feature_selection == '7':
-        # print('Submit : ')
-        # submit_order()
-        # print(export_data)
-        # print('Create submit_row_data() function')
         update_date_ordered()
         combine_data_for_export()
         submit_row_data()
-    # elif feature_selection == '8':
-    #     clear_screen()
-    #     order_no = order_data[3]
-    #     print(f'Re-printing order number : {order_no}...')
-    #     submit_order()
     elif feature_selection == '8':
         combine_data_for_export()
         main()
@@ -815,13 +619,10 @@ def change_feature_of_order():
 
 def update_status():
     """
-    Generates a list of user options to append details of an exsisting order ot
+    Generates a list of user options to append details of an exsisting order to
     create new order details and/or navigate through the system
     """
     order_no = order_data[3]
-    # f_name = user_data[0]
-    # print(export_data)
-
     print(f'What would you like to do with order no. {order_no} ?')
     print('\nSelect 1. : Re-Print this order again (no changes)')
     print('Select 2. : Change the features')
@@ -829,35 +630,29 @@ def update_status():
     print('Select 4. : Cancel order')
     print('Select 5. : Search different order')
     print('Select 6. : Take me home\n')
-
     startover = input('Your Selection: ')
-    for i in startover:
-        if i == '1':
+
+    for selection in startover:
+        if selection == '1':
             clear_screen()
-            print(f'Re-printing order number : {order_no}...\n')
+            print(f'Re-printing order number : {order_no}...')
             submit_order()
-            # test_email()
-            # email_print_update_startover()
-        elif i == '2':
+        elif selection == '2':
             clear_screen()
-            print(f'Order No. {order_no}\n')
+            print(f'Order No. {order_no}')
             validate_change_feature_of_order()
-            # email_print_update_startover()
-        elif i == '3':
+        elif selection == '3':
             clear_screen()
             print('Starting a new N3D insole order...')
             yes_no_user()
-            # get_order_data()
-        elif i == '4':
+        elif selection == '4':
             clear_screen()
             print(f'Checking the current status of order no. {order_no} ...')
             update_to_canceled_status()
-
-        elif i == '5':
+        elif selection == '5':
             clear_screen()
             display_order()
-            # order_no = input(f'Your order no. : {order_no}')
-        elif i == '6':
+        elif selection == '6':
             clear_screen()
             main()
         else:
@@ -866,11 +661,8 @@ def update_status():
             )
             print('Please select again\n')
             email_print_update_startover()
-
     iso_format_timezone = generate_utc_time()
     update_order[1] = iso_format_timezone
-    # print(update_order)
-    # print(export_data)
 
 
 def cancel_confirm():
@@ -889,8 +681,6 @@ def update_to_canceled_status():
     Updates status to pending when user saves order
     """
     row = order_data[7]
-    # order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
-# accessing our order_worksheet from our google sheet
     order_worksheet = SHEET.worksheet('orders')
     print(f'Current order status is: {export_data[8]}')
     if export_data[8] == 'PENDING' or export_data[8] == 'NEW ORDER' or \
@@ -901,9 +691,7 @@ def update_to_canceled_status():
         iso_format_timezone = generate_utc_time()
         export_data[9] = iso_format_timezone
         export_data[8] = 'CANCELED'
-# updating cell i in colom I
         order_worksheet.update(f'I{row}', f'{export_data[8]}')
-# updating cell i in colom J
         order_worksheet.update(f'J{row}', f'{export_data[9]}')
         print('\nOrder successfully CANCELED.')
         print(
@@ -916,45 +704,34 @@ def update_to_canceled_status():
             )
         email_print_update_startover()
     else:
-        # print('false')
         print(
-            'Unfortunatley as a custom made product, this order is already at'
-            f' the {export_data[8]} stage.'
+            '\nUnfortunatley as a custom made product, this order is now at'
+            f' the \n{export_data[8]} stage, manufacturing has commenced and'
+            ' the opportunity\nto alter or cancel the order has passed.'
             )
         print(
-            '\nFrom this point manufacturing has already commenced. As it '
-            '\nis made to your specifications, the window to alter or cancel '
-            '\nthe order has passed.'
-            )
-        print(
-            '\nFor further clarificaiton of made-to-order products purchased'
+            '\nFor further clarification of made-to-order products purchased'
             ' online,'
-            '\nspecifically section 13(1)(c) of the UK Distance Selling'
+            '\nspecifically section 13(1)(c): UK Distance Selling'
             ' Regulations, please visit: '
-            'https://www.legislation.gov.uk/uksi/2000/2334/contents/made. '
-            '\nAlternately, contact info@northotics.com refering order '
+            '\nhttps://www.legislation.gov.uk/uksi/2000/2334/contents/made '
+            '\nAlternately, contact info@northotics.com referring order '
             'number :'
-            f' {export_data[6]}.'
-            '\nYour purchasing rights have not been affected.\n'
+            f' {export_data[6]}'
+            '\n\nYour purchasing rights have not been affected.'
             )
         email_print_update_startover()
 
 
 def submit_row_data():
     """
-    Replaces the exsisting row data in the worksheet with updated data and
+    Replaces the existing row data in the worksheet with updated data and
     records the date of the order update
     """
     row = order_data[7]
-    # order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
     order_worksheet = SHEET.worksheet('orders')
 
     print(f'Accessing your order on row number : {row}')
-    # print(f'order_row :\n{order_row}')
-    # print(f'export_data :\n{export_data}')
-    # print(f'order_data :\n{order_data}')
-    # print(f'user_data :\n{user_data}')
-
     iso_format_timezone = generate_utc_time()
     export_data[9] = iso_format_timezone
     export_data[8] = 'UPDATED ORDER'
@@ -971,18 +748,14 @@ def submit_row_data():
 
     print(f'\nOrder No. {export_data[6]} successfully updated!')
     print('Thanks for using the N(3)Orthotics order submission app.\n')
-    # print(
-    #     '\nYou should shortly recieve an email confirming these changes to:'
-    #     f'\n{export_data[2]}\n'
-    #     )
     update_status()
 
 
 def submit_order():
     """
     User choice to deny or confirm order submission.
-    Confirn compiles list from user_data and oder_data then
-    exports it to update_sales-worksheet function
+    Confirm compiles list from user_data and oder_data then exports it to
+    update_sales-worksheet function
     """
     submit = input('\nWould you like to submit this order? y/n: ').lower()
     if submit.startswith('n'):
@@ -994,27 +767,12 @@ def submit_order():
         combine_data_for_export()
         generate_row_no()
         update_order_worksheet(export_data)
-
-        # user_email = export_data[2]
-# updates order number for export to gsheets
         recent_order_no = export_data[6]
-# ensures order row data is same as export row data
         order_data[7] = export_data[10]
-        # print(export_data[10])
-        # print(order_data[7])
-# updates local order data for change feat
-        # recent_order_no = order_data[7]
         submitted_time = export_data[7]
-
         print('Order Successfully Submitted!!')
-        # print(
-        #     '\nYou will shortly receive an email instructions to:'
-        #     f'\n{user_email} with the details to arrange secure payment.'
-        #     )
         print(f'\nYour order number is: {recent_order_no}')
         print(f'Submitted on: {submitted_time}')
-        # print(export_data)
-
         summary_order_data()
         email_print_update_startover()
 
@@ -1024,96 +782,63 @@ def update_order_worksheet(data):
     Update sales google worksheet, add new row with the list data provided
     """
     print('Contacting the mothership...')
-# accessing our sales_worksheet from our google sheet
     order_worksheet = SHEET.worksheet('orders')
-# adds a new row in the google worksheet selected
     order_worksheet.append_row(data)
     print('Information received...')
 
 
 def save_order():
     """
-    User descision to save order as pending within gsheets or
+    User decision to save order as pending within gsheets or
     clear all local data and return to main screen
     """
     save = input('\nWould you like to save this order? y/n: ').lower()
     if save.startswith('n'):
-        # user_data.clear()
         order_data.clear()
         export_data.clear()
         clear_screen()
         main()
     else:
-        # update_date_ordered()
         export_data[7] = ''
-        # generate_order_no()
         update_to_pending_status()
-        # combine_data_for_export()
-        # print(export_data)
-        # summary_order_data()
-        # display_order()
         email_print_update_startover()
-
-
-# def export_to_printer():
-#     os.startfile("TestFile.txt", "print")
-#     import platform
-#     print(platform.platform())
 
 
 def email_print_update_startover():
     """
-    User descision tree to navigate following a successful submission,
-    fetaure change, save or change of status
+    User decision tree to navigate following a successful submission,
+    feature change, save or change of status
     """
     print('\nWhat would you like to do next?')
     print('Select 1. : Change the features of this Order')
     print('Select 2. : Place a new N3D insole order')
-    print('Select 3. : Retrieve an exsisting N(3) order')
+    print('Select 3. : Retrieve an existing N(3) order')
     print('Select 4. : Take Me Home')
     print('Select 5. : Exit the N(3)Orthotics order portal\n')
-    # print('\nSelect 6. : Email this order (TBC)')
-    # print('Select 7. : Print this order (TBC)')
-
     startover = input('Your Selection: ')
     order_no = order_data[3]
-    # user_email = user_data[2]
-    for i in startover:
-        if i == '1':
+    for selection in startover:
+        if selection == '1':
             clear_screen()
-            print(f'Order No. {order_no}\n')
+            print(f'Order No. {order_no}')
             validate_change_feature_of_order()
-        elif i == '2':
+        elif selection == '2':
             clear_screen()
             print('Starting a new N3D insole order...')
             yes_no_user()
-            # get_order_data()
-        elif i == '3':
+        elif selection == '3':
             clear_screen()
             print('Retrieve an Exsisting Order...\n')
             display_order()
-        elif i == '4':
+        elif selection == '4':
             print('Taking you to home page...\n')
             clear_screen()
             start()
             select_option()
-        elif i == '5':
+        elif selection == '5':
             print('Exiting this n3orthotics session...\n')
             clear_screen()
             exit()
-        # elif i == '6':
-        #     clear_screen()
-        #     print(f'Emailing order number : {order_no} to {user_email}...\n')
-        #     # test_email()
-        #     email_print_update_startover()
-        #     # main()
-        # elif i == '7':
-        #     clear_screen()
-        #     print(f'Printing order number : {order_no}...\n')
-        #     email_print_update_startover()
-        #     # get_user_data()
-        #     # instruct_user_data()
-        #     # get_user_data()
         else:
             print(
                 f'The number you have provided "{startover}" is not available.'
@@ -1135,90 +860,6 @@ def main():
     yes_no_user()
     summary_order_data()
     combine_data_for_export()
-    # submit_order()
 
 
 main()
-
-# get_latest_row_entry()
-# validate_user_email(values='stuart@roeszler.com')
-# validate_user_names(values='stuart Roes3ler')
-# yes_no_user()
-# start()
-# select_option()
-# summary_user_data()
-# yes_no_user()
-# get_order_data()
-# get_size_data()
-# summary_order_data()
-# submit_order()
-# save_order()
-# combine_data_for_export()
-# clear_screen()
-# generate_order_no()
-# generate_date_time()
-# generate_utc_time()
-# update_date_ordered()
-# instruct_user_data()
-# email_print_update_startover()
-# slice_last_order_no()
-# test_email() # not yet working
-# export_to_printer()
-# update_status()
-retrieve_order()
-# display_order()
-# input_order_no()
-# update_to_pending_status()
-# update_to_canceled_status()
-# cancel_confirm()
-# validate_change_feature_of_order()
-# generate_row_no()
-# test()
-
-
-
-
-# Testing email details SSL
-# def test_email():
-#     """
-#     Accesses Email account to send summary information of order
-#     """
-#     port = 465  # For SSL
-#     smtp_server = "smtp.gmail.com"
-#     sender_email = "testingn3d@gmail.com"  # Enter your address
-#     receiver_email = user_data[2] # retrieves the receiver address
-#     print(receiver_email)
-#     password = input("Type your password and press enter: ")
-#     message = """\
-#     Subject: Hi there
-#     This message is sent from Python."""
-
-#     context = ssl.create_default_context()
-#     with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
-#         server.login(sender_email, password)
-#         server.sendmail(sender_email, receiver_email, message)
-
-# # Testing email details TLS
-# def test_email():
-#     port = 587  # For starttls
-#     smtp_server = "smtp.gmail.com"
-#     sender_email = "testingn3d@gmail.com"
-# # retrieves the receiver address
-#     receiver_email = user_data[2]
-#     password = input(
-#         "Type the testing password provided by developer and press enter: "
-#         )
-#     message = """\
-#     Subject: Hi there
-
-#     This message is sent from Python."""
-
-#     context = ssl.create_default_context()
-#     with smtplib.SMTP(smtp_server, port) as server:
-#         # server.ehlo()  # Can be omitted
-#         server.starttls(context=context)
-#         # server.ehlo()  # Can be omitted
-#         server.login(sender_email, password)
-#         server.sendmail(sender_email, receiver_email, message)
-
-# order_date = ''

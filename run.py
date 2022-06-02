@@ -6,6 +6,7 @@ from google.oauth2.service_account import Credentials
 import re # regular extensions import for checking syntax of email
 import os
 import datetime
+from datetime import timezone
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -20,7 +21,9 @@ SHEET = GSPREAD_CLIENT.open('n3orthotics')
 REGEX_EMAIL = r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'
 
 user_data = ['f_name', 'l_name', 'user_email']
-order_data = ['size_eu', 'height', 'width', 'order_no', 'order_date', 'order_status']
+order_data = [
+    'size_eu', 'height', 'width', 'order_no', '', 'order_status', '', 'row_no'
+    ]
 update_order = ['order_status', 'order_update']
 export_data = []
 

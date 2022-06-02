@@ -55,26 +55,29 @@ def instruct_user_data():
 
 def get_user_data():
     """
-    Get User first name, last name and email from user as a string
+    User input of first name, last name and email to from a string
     with fist letter capitalized for names and all lowercase email 
     """
-    print('Where prompted below, please enter your name and email.')
-    print('This information should be in a valid syntax, with no spaces. For example:\n')
-    
-    print('First Name: Bobby\nLast Name: Hunden')
-    print('Email: bobby123@yourdomain.com\n')
-    
     f_name = remove(input('Your First Name: ').capitalize())
+    user_data[0] = f_name
+    print(user_data)
+
     l_name = remove(input('Your Last Name: ').capitalize())
+    user_data[1] = l_name
+    print(user_data)
+
     user_email = remove(input('Your Email: ').lower())
-    
+    user_data[2] = user_email
+    print(user_data)
+
     print(f'\nThanks {f_name}. Your user details are as follows:')
     print('------------')
     print(f'Full Name: {f_name} {l_name}\nEmail: {user_email}')
     print('------------\n')
-    # validate_user_names(f'{f_name},{l_name}')
+    validate_user_names(f'{f_name}')
+    validate_user_names(f'{l_name}')
     validate_user_email(f'{user_email}')
-    yes_no_user()
+    
 
 
 def validate_user_names(values):

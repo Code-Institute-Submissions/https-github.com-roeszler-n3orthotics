@@ -291,8 +291,10 @@ def get_width_data():
 
 def combine_data_for_export():
     for i in user_data:
-        order_data.insert(0,i)
-    print(order_data)
+        export_data.append(i)
+    for i in order_data:
+        export_data.append(i)
+    # print(order_data)
 
 
 def clear_screen():

@@ -106,14 +106,11 @@ def validate_user_f_name(values):
         validate_user_f_name(f_name)
         # print(user_data)
 
-def validate_user_names(values):
+def validate_user_l_name(values):
     """
     Inside the try, checks all user_email input syntax.
     Raises ValueError if strings cannot be converted
     """
-    # values_string = f'{values.split(",")}'
-    # print(f'The user_data you provided converted into a list of strings is:\n{values_string}\n')
-
     try:
         # if (re.fullmatch(REGEX_NAME, values)):
         if values.isalpha():
@@ -123,8 +120,11 @@ def validate_user_names(values):
                 f'The name you have provided "{values}" does not seem\nto be in a regular format'
             )
     except ValueError as e:
-        print(f'Invalid data: {e}. Please check the entry and try again.\n')
-        get_user_data()
+        print(f'\nInvalid data: {e}. Please check the entry and try again.\n')
+        l_name = remove(input('Your Last Name: ').capitalize())
+        user_data[1] = l_name
+        validate_user_l_name(l_name)
+        # print(user_data)
 
 
 def validate_user_email(user_email):

@@ -461,6 +461,37 @@ def display_order():
     update_status()
 
 
+def change_feat():
+    """
+    
+    """
+    row = order_data[7]
+    order_row = SHEET.worksheet('orders').get_values(f'A{row}:K{row}')
+    flat_order = flatten_nested_list(order_row)
+
+    print(f'\nCurrent order status is: {export_data[8]}\n')
+    print(flat_order)
+    print(order_data[7])
+    print(type(order_data[7]))
+    print(export_data[9])
+
+    print('\nYour order details are as follows:\n')
+    print(f'Order No. : {flat_order[6]}\nDate Ordered : {flat_order[7]}\nPlace in production queue : {flat_order[10]}\n')
+
+    print('\nDetails you can edit:\n')
+    print(f'1. Full Name : {user_data[0]} {flat_order[1]}\n2. Email : {flat_order[2]}')
+    print(f'3. Shoe Size : EU {flat_order[3]}\n4. Arch Height : {flat_order[4]}\n5. Insole Width : {flat_order[5]}')
+    print(f'6. Current Status : {flat_order[8]}\n')
+
+    input('Which feature(s) would you like to change? : ')
+
+    # if export_data[8] == 'PENDING' or export_data[8] == 'NEW ORDER' or export_data[8] == 'CREATED' or export_data[8] == 'ACCEPTED' or export_data[8] == 'DESIGNED':
+    #     print('True')
+    # else:
+    #     print('False')
+    #     # display_order()
+
+
 def update_status():
     """
     

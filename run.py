@@ -587,6 +587,20 @@ def input_order_no():
         return order_no
 
 
+# Sourced from https://www.pythonpool.com/flatten-list-python/
+def flatten_nested_list(input_list):
+    """
+    Flattens a nested list into a list
+    """
+    flattened_list = []
+    for value in input_list:
+        if isinstance(value, list):
+            flattened_list.extend(flatten_nested_list(value))
+        else:
+            flattened_list.append(value)
+    return flattened_list
+
+
 def retrieve_order():
     """
     Searches worksheet coloum order_no for a match to user input and

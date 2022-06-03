@@ -473,7 +473,8 @@ def retrieve_order():
         if order_nos[index_no] == search_input
         ]
     if order_match == []:
-        print(f'Order number {search_input} not found?!\n')
+        clear_screen()
+        print(f'Order number {search_input} not found in our database...?\n')
         retrieve_order()
     else:
         row_location = [

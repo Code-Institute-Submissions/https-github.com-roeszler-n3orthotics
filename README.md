@@ -229,7 +229,7 @@ Date Updated and Date Ordered can exist independently of each other, but __all s
 * Containing these more descriptive `.py` files into a parent folder is good practice and promotes the depth, breadth and readability of the code written.
   * Accessing `.py` files in a subsequent file folder involves containing a `__init__.py` within the parent file folder, as researched at [stackoverflow.com](ttps://stackoverflow.com/questions/44977227/how-to-configure-main-py-init-py-and-setup-py-for-a-basic-package-setu).
 #### Application Programming Interface (API)
-* Including an API to efficiently automate ordering functions into popular, commercially available clinical practice management software(s).
+* Including an API to work with sites like online footwear retailers &/or medical practice management software(s).
 #### Inclusion into a full stack project
 * The functions and value of this order portal lends itself to expansion and integration into wider ranging full stack projects.
 
